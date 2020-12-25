@@ -1,11 +1,8 @@
 package http
 
 import (
-	"fmt"
 	"github.com/gin-gonic/gin"
-	"github.com/gin-gonic/gin/binding"
-	"github.com/wike2019/wike_go/src/util/Validate"
-	"github.com/wike2019/wike_go/src/web"
+	"github.com/wike2019/wike_go/src/Web"
 )
 
 type TokenCheck struct {}

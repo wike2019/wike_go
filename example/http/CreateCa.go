@@ -3,10 +3,11 @@ package http
 import (
 	"fmt"
 	"github.com/dgrijalva/jwt-go"
-	"github.com/wike2019/wike_go/src/util/help"
-	"github.com/wike2019/wike_go/src/util/jwtutil"
+	"github.com/wike2019/wike_go/src/util/Help"
+	"github.com/wike2019/wike_go/src/util/Jwtutil"
 	"time"
 )
+
 type UserClaim struct {
 	Age float64  //这里是坑 jwt转换过后 Int被转换成float64 所以 int改成float64
 	Uname string

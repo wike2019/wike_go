@@ -1,7 +1,7 @@
 package Etcd
 
 import (
-	"github.com/wike2019/wike_go/src/core/ioc"
+
 	"github.com/wike2019/wike_go/src/result"
 	"sync"
 )

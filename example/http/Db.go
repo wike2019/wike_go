@@ -4,8 +4,7 @@ import (
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/jinzhu/gorm"
 	Injector "github.com/shenyisyn/goft-ioc"
-	"github.com/wike2019/wike_go/src/core/config"
-	"log"
+
 )
 
 type DBConfig struct {

@@ -4,18 +4,11 @@ import (
 	"fmt"
 	"github.com/gin-gonic/gin"
 	"github.com/jinzhu/gorm"
-	"github.com/wike2019/wike_go/example/services"
-	"github.com/wike2019/wike_go/src/Grpc"
-	"github.com/wike2019/wike_go/src/core/cache"
-	"github.com/wike2019/wike_go/src/core/etcd"
-	"github.com/wike2019/wike_go/src/core/redis"
-	"github.com/wike2019/wike_go/src/core/sql"
-	"github.com/wike2019/wike_go/src/util/LoadBalance"
-	"github.com/wike2019/wike_go/src/web"
-	"io"
-	"log"
+	"github.com/wike2019/wike_go/src/core/Etcd"
+	"github.com/wike2019/wike_go/src/core/Redis"
 	"time"
 )
+
 
 type IndexController struct {
 	Db *gorm.DB                          `inject:"-"`
@@ -113,6 +106,17 @@ func(this *IndexController) F234567 (ctx *gin.Context) Web.Json {
 	newsCache.GetCacheForObject("user"+id,usr)
 	return  usr
 }
+func(this *IndexController) F2345679 (ctx *gin.Context) string {
+	// 1、从对象池 获取新闻缓存 对象
+	newsCache:= Cache.RedisCache()
+	defer Cache.ReleaseRedisCache(newsCache)
+	id:=ctx.Query("id")
+	newsCache.DBGetter= NewUserGetter2(id) //一旦缓存没有，则需要从哪去取
+	// 3、取缓存输出（一旦没有，上面的DBGetter会被调用)
+	var usr string
+	newsCache.GetCacheForObject("news"+id,&usr)
+	return  usr
+}
 func(this *IndexController) Grpc (ctx *gin.Context) Web.Json {
 	// 1、从对象池 获取新闻缓存 对象
 	client:=Grpc.NewClient(Grpc.KeyPath("./keys"),Grpc.Host("wike.com"),Grpc.Ip("192.168.3.3:8081"))
@@ -196,6 +200,7 @@ func(this *IndexController) Build(goft *Web.Goft){
 		Handle("GET","/F2345",this.F2345).
 		Handle("GET","/F23456",this.F23456).
 		Handle("GET","/F234567",this.F234567).
+		Handle("GET","/F234567",this.F2345679).
 		Handle("GET","/Index2",this.Index2).
 		Handle("GET","/A2",this.A2).
 		Handle("GET","/grpc",this.Grpc).

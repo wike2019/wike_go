@@ -1,9 +1,9 @@
 package Cache
 
 import (
-	"github.com/wike2019/wike_go/src/core/ioc"
-	"github.com/wike2019/wike_go/src/core/redis"
-	"github.com/wike2019/wike_go/src/result"
+	"github.com/wike2019/wike_go/src/Result"
+	"github.com/wike2019/wike_go/src/core/Ioc"
+	"github.com/wike2019/wike_go/src/core/Redis"
 	"sync"
 	"time"
 )

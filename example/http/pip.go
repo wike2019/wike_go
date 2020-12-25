@@ -2,7 +2,7 @@ package http
 
 import (
 	"fmt"
-	"github.com/wike2019/wike_go/src/util/pip"
+	"github.com/wike2019/wike_go/src/util/Pip"
 	"time"
 )
 

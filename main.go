@@ -1,1 +1,0 @@
-package wike_go

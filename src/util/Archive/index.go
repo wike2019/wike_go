@@ -200,7 +200,7 @@ func (this * Archive) UnTarDir(src,dist string)error{
 		switch hdr.Typeflag {
 		case tar.TypeDir: // 如果是目录时候，创建目录
 			// 判断下目录是否存在，不存在就创建
-			if b := help.ExistDir(dstFileDir); !b {
+			if b := Help.ExistDir(dstFileDir); !b {
 				// 使用 MkdirAll 不使用 Mkdir ，就类似 Linux 终端下的 mkdir -p，
 				// 可以递归创建每一级目录
 				return(os.MkdirAll(dstFileDir, 0775))

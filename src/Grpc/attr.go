@@ -1,6 +1,6 @@
 package Grpc
 
-
+import "google.golang.org/grpc"
 
 type GrpcAttrFunc func(grpc *Grpc) //设置User属性的 函数类型
 type GrpcAttrFuncs []GrpcAttrFunc
@@ -9,14 +9,14 @@ func(this GrpcAttrFuncs) apply(u *Grpc)  {
 		f(u)
 	}
 }
-func StreamServerInterceptor(fn Middle) GrpcAttrFunc  {
+func StreamServerInterceptor(fn grpc.UnaryServerInterceptor) GrpcAttrFunc  {
 	return func(u *Grpc) {
-		u.ChainServer=append(u.ChainServer,fn.Action())
+		u.ChainServer=append(u.ChainServer,fn)
 	}
 }
-func ServerInterceptor(fn MiddleStream) GrpcAttrFunc  {
+func ServerInterceptor(fn grpc.StreamServerInterceptor) GrpcAttrFunc  {
 	return func(u *Grpc) {
-		u.ChainStreamServer=append(u.ChainStreamServer,fn.Action())
+		u.ChainStreamServer=append(u.ChainStreamServer,fn)
 	}
 }
 func Ip(ip string) GrpcAttrFunc  {
@@ -34,3 +34,4 @@ func KeyPath(path string) GrpcAttrFunc  {
 		u.KeyPath=path
 	}
 }
+

@@ -5,7 +5,9 @@ import (
 	"fmt"
 	"github.com/go-redis/redis/v8"
 	Injector "github.com/shenyisyn/goft-ioc"
-
+	"github.com/wike2019/wike_go/src/core/Config"
+	"log"
+	"time"
 )
 
 type RedisConfig struct {

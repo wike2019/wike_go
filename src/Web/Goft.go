@@ -4,6 +4,8 @@ import (
 	"fmt"
 	"github.com/gin-gonic/gin"
 	"github.com/shenyisyn/goft-ioc"
+	"github.com/wike2019/wike_go/src/core/Config"
+	"github.com/wike2019/wike_go/src/core/Ioc"
 	"strings"
 	"sync"
 )

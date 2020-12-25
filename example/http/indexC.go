@@ -4,8 +4,16 @@ import (
 	"fmt"
 	"github.com/gin-gonic/gin"
 	"github.com/jinzhu/gorm"
+	"github.com/wike2019/wike_go/example/services"
+	"github.com/wike2019/wike_go/src/Grpc"
+	"github.com/wike2019/wike_go/src/Web"
+	"github.com/wike2019/wike_go/src/core/Cache"
 	"github.com/wike2019/wike_go/src/core/Etcd"
 	"github.com/wike2019/wike_go/src/core/Redis"
+	"github.com/wike2019/wike_go/src/core/sql"
+	"github.com/wike2019/wike_go/src/util/LoadBalance"
+	"io"
+	"log"
 	"time"
 )
 
@@ -200,7 +208,7 @@ func(this *IndexController) Build(goft *Web.Goft){
 		Handle("GET","/F2345",this.F2345).
 		Handle("GET","/F23456",this.F23456).
 		Handle("GET","/F234567",this.F234567).
-		Handle("GET","/F234567",this.F2345679).
+		Handle("GET","/F2345679",this.F2345679).
 		Handle("GET","/Index2",this.Index2).
 		Handle("GET","/A2",this.A2).
 		Handle("GET","/grpc",this.Grpc).

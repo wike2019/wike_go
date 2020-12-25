@@ -2,7 +2,7 @@ package init
 
 import (
 	Injector "github.com/shenyisyn/goft-ioc"
-	"github.com/wike2019/wike_go/src/core/config"
+	"github.com/wike2019/wike_go/src/core/Config"
 	"github.com/wike2019/wike_go/src/core/sql"
 )
 // 默认加载 加载配置文件 和 Db解析 用于数据库适配

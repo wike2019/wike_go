@@ -1,7 +1,7 @@
 package Etcd
 
 import (
-	"github.com/wike2019/wike_go/src/result"
+	"github.com/wike2019/wike_go/src/Result"
 	"go.etcd.io/etcd/clientv3"
 )
 

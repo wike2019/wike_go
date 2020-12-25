@@ -3,6 +3,8 @@ package Redis
 import (
 	"context"
 	"github.com/go-redis/redis/v8"
+	"github.com/wike2019/wike_go/src/Result"
+	"github.com/wike2019/wike_go/src/core/Ioc"
 
 	"time"
 )

@@ -14,7 +14,7 @@ func init()  {
 	NewsCachePool=&sync.Pool{
 		New: func() interface{} {
 			RedisStringOperation:= Result.Result(Ioc.New().ExprData["RedisStringOperation"]).Unwrap()
-			return Redis.NewSimpleCache(RedisStringOperation.(*Redis.RedisStringOperation),time.Second*15, Redis.Serilizer_JSON)
+			return Redis.NewSimpleCache(RedisStringOperation.(*Redis.RedisStringOperation),time.Second*300, Redis.Serilizer_JSON)
 		},
 	}
 }

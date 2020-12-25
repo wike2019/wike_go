@@ -2,7 +2,8 @@ package Etcd
 
 import (
 	"fmt"
-	"github.com/wike2019/wike_go/src/result"
+	"github.com/wike2019/wike_go/src/Result"
+
 	"go.etcd.io/etcd/clientv3"
 	"time"
 )
@@ -14,7 +15,6 @@ func (this *EtcdCtl) Put(key string,value string,attrs ...*OperationAttr) interf
 		Unwrap_Or(nil)
 	fmt.Println(leaseId)
 	if leaseId !=nil {
-		fmt.Println(3333333333333)
 		return Result.Result(kv.Put(this.ctx,key,value,clientv3.WithLease(leaseId.(clientv3.LeaseID)))).Unwrap()
 
 	}

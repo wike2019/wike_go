@@ -2,6 +2,7 @@ package Redis
 
 import (
 	"fmt"
+	"github.com/wike2019/wike_go/src/Result"
 	"time"
 )
 

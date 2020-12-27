@@ -27,7 +27,7 @@ func (this * Archive) TarFile(src,dist string) error {
 	}
 
 	tw := tar.NewWriter(fw)
-	tw.Close()
+	defer tw.Close()
 
 	fi, err := os.Stat(src)
 	if err != nil{
@@ -37,7 +37,7 @@ func (this * Archive) TarFile(src,dist string) error {
 	if err != nil{
 		return  err
 	}
-	return tw.WriteHeader(hdr)
+	tw.WriteHeader(hdr)
 
 	fr, err := os.Open(src)
 	if err != nil{
@@ -49,14 +49,17 @@ func (this * Archive) TarFile(src,dist string) error {
 		return  err
 	}
 	log.Printf("共写入了 %d 个字符的数据\n",written)
+	return  nil
 }
-func (this * Archive) UnTarFile(src string) error{
+func (this * Archive) UnTarFile(src string,dist string) error{
 	fr, err := os.Open(src)
 	if err != nil{
 		return  err
 	}
 	defer fr.Close()
 	tr := tar.NewReader(fr)
+	Help.ExistDir(dist);
+	os.MkdirAll(dist,0775)
 	for hdr, err := tr.Next(); err != io.EOF; hdr, err = tr.Next(){
 		// 处理 err ！= nil 的情况
 		if err != nil{
@@ -66,7 +69,7 @@ func (this * Archive) UnTarFile(src string) error{
 		fi := hdr.FileInfo()
 
 		// 创建一个空文件，用来写入解包后的数据
-		fw, err := os.Create(fi.Name())
+		fw, err := os.Create(filepath.Join(dist,fi.Name()))
 		if err != nil{
 			return  err
 		}
@@ -85,7 +88,7 @@ func (this * Archive) UnTarFile(src string) error{
 		// 如果想使用 defer 的话，可以将文件写入的步骤单独封装在一个函数中即可
 		fw.Close()
 	}
-
+	return  nil
 }
 
 func (this * Archive) TarDir(src,dist string) error{
@@ -158,6 +161,7 @@ func (this * Archive) TarDir(src,dist string) error{
 	if err != nil{
 		return  err
 	}
+	return  nil
 }
 func (this * Archive) UnTarDir(src,dist string)error{
 	// 打开准备解压的 tar 包
@@ -225,7 +229,7 @@ func (this * Archive) UnTarDir(src,dist string)error{
 		}
 	}
 
-
+	return  nil
 }
 
 func (this * Archive)  Zip(src, dist string)error {
@@ -289,6 +293,7 @@ func (this * Archive)  Zip(src, dist string)error {
 		fmt.Printf("成功压缩文件： %s, 共写入了 %d 个字符的数据\n", path, n)
 		return  nil
 	})
+	return  nil
 }
 
 func (this * Archive)  UnZip(src, dist string)error {
@@ -341,4 +346,5 @@ func (this * Archive)  UnZip(src, dist string)error {
 		fw.Close()
 		fr.Close()
 	}
+	return  nil
 }

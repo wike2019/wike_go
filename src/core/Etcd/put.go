@@ -3,9 +3,7 @@ package Etcd
 import (
 	"fmt"
 	"github.com/wike2019/wike_go/src/Result"
-
 	"go.etcd.io/etcd/clientv3"
-	"time"
 )
 
 //插入数据
@@ -21,7 +19,7 @@ func (this *EtcdCtl) Put(key string,value string,attrs ...*OperationAttr) interf
 	}
 	time:=OperationAttrs(attrs).
 		Find(ATTR_WithTime).
-		Unwrap_Or(time.Second*0).(int64)
+		Unwrap_Or(int64(0)).(int64)
 	if time!=0{
 		leaseId:= Result.Result(this.EtcdClient.Grant(this.ctx, time)).Unwrap().(*clientv3.LeaseGrantResponse).ID;
 		return Result.Result(kv.Put(this.ctx,key,value,clientv3.WithLease(leaseId))).Unwrap()

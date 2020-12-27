@@ -6,6 +6,7 @@ type NodeBalance interface {
 	GetWeight() int
 	GetStatus() string
 	SetCWeight(val int)
-	SetWeight(Weight int )
+	SetWeight(Weight int)
+	GetId() string
 }
 

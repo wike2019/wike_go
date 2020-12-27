@@ -8,12 +8,12 @@ import (
 )
 
 //取得数据
-func(this *EtcdCtl) LoadService (name string) ([]*ServiceInfo,error) {
+func(this *EtcdCtl) LoadService (name string) ([]LoadBalance.NodeBalance,error) {
 	res,err:=this.Get(keyPrefix,WithPrevKV())
 	if err!=nil{
 		return nil,err
 	}
-	Services:=make([]*ServiceInfo,0)
+	Services:=make([]LoadBalance.NodeBalance,0)
 
 	for _,item:=range res.Kvs{
 
@@ -22,7 +22,7 @@ func(this *EtcdCtl) LoadService (name string) ([]*ServiceInfo,error) {
 	return Services,nil
 }
 //解析服务
-func(this *EtcdCtl) parseService(key []byte,value []byte,Services []*ServiceInfo,name string) []*ServiceInfo {
+func(this *EtcdCtl) parseService(key []byte,value []byte,Services []LoadBalance.NodeBalance,name string) []LoadBalance.NodeBalance {
 	str:=fmt.Sprintf("%s([^/]+)/([^/]+)", keyPrefix)
 	reg:=regexp.MustCompile(str)
 	if reg.Match(key){
@@ -31,15 +31,16 @@ func(this *EtcdCtl) parseService(key []byte,value []byte,Services []*ServiceInfo
 		if string(sname)==name {
 			var service ServiceInfo
 			json.Unmarshal(value, &service)
-			Services=append(Services,&service)
+			Services=append(Services, &service)
 		}
 	}
 	return Services
 }
 
 //选择器
-func(this *EtcdCtl)  Seletor(Services []*ServiceInfo,selectType int,ip string)(LoadBalance.NodeBalance,error)  {
-	if LB.NeedReLoad(len(Services)){
+func(this *EtcdCtl)  Seletor(Services LoadBalance.NodeBalanceSlice,selectType int,ip string)(LoadBalance.NodeBalance,error)  {
+
+	if LB.NeedReLoad(Services){
 		LB.Clear()
 		for _,node:=range Services{
 			node.SetCWeight(0)

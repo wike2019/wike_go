@@ -14,6 +14,7 @@ type ServerConfig struct {
 	Name string
 	Mysql string
 	Redis string
+	Etcd string
 }
 
 //系统配置
@@ -26,7 +27,7 @@ func (this *SysConfig) Name() string {
 }
 
 func NewSysConfig() *SysConfig {
-	return &SysConfig{Server: &ServerConfig{Port: 8080, Name: "wikeGo微服务框架",Mysql:"root:root@tcp(192.168.3.2:3306)/test?charset=utf8mb4&parseTime=True&loc=Local",Redis:"192.168.3.2:6379"}}
+	return &SysConfig{}
 }
 func InitConfig() *SysConfig {
 	config := NewSysConfig()

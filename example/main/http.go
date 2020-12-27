@@ -71,7 +71,7 @@ func main()  {
 		ServiceName: "wike3",
 		ServiceAddr: "192.168.3.3:8081",
 		ServiceType:  "http",
-		DefaultBalance:&LoadBalance.DefaultBalance{Weight:10,Status:LoadBalance.Ready},
+		DefaultBalance:&LoadBalance.DefaultBalance{Weight:10,Status:LoadBalance.Ready,Id:id1},
 		ServiceHost:"wike.com",
 
 	})

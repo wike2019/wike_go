@@ -81,6 +81,7 @@ func(this *IndexController) E (ctx *gin.Context) Web.Json {
 func(this *IndexController) F (ctx *gin.Context) Web.Json {
 	u:=&User{}
 	fmt.Println(this.Db)
+	fmt.Errorf("抛出一个错误","这个是返回的提示消息")
 	Web.Error(this.Db.Table("users").Where("user_id=?",2).Find(u).Error)
 	return gin.H{"resut":u}
 }
@@ -138,6 +139,7 @@ func(this *IndexController) Grpc (ctx *gin.Context) Web.Json {
 }
 
 func(this *IndexController) Grpc5(ctx *gin.Context) Web.Json {
+	fmt.Println(Grpc.WithEtcd("wike3",LoadBalance.RoundRobinByWeight,ctx.ClientIP()))
 	// 1、从对象池 获取新闻缓存 对象
 	client:=Grpc.NewClient(Grpc.KeyPath("./keys"),Grpc.WithEtcd("wike3",LoadBalance.RoundRobinByWeight,ctx.ClientIP()))
 	defer client.Close()

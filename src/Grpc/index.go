@@ -71,7 +71,9 @@ func NewClient(fs ...GrpcAttrFunc) *grpc.ClientConn {
 
 	if u.ServerName !=""{
 		m,_:=u.Etcdctl.LoadService(u.ServerName)
+		fmt.Println(u.ServerName)
 		info := Result.Result(u.Etcdctl.Seletor(m, LoadBalance.RoundRobinByWeight, u.ClientIp)).Unwrap().(LoadBalance.NodeBalance)
+
 		u.Host=info.GetNode().(*Etcd.ServiceInfo).ServiceHost
 		u.Ip=info.GetNode().(*Etcd.ServiceInfo).ServiceAddr
 		fmt.Println(u)

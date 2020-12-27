@@ -1,20 +1,18 @@
 package Crypto
 
 import (
-"bytes"
-"crypto/aes"
-"crypto/cipher"
-"crypto/dsa"
-"crypto/md5"
-"crypto/rand"
-"crypto/rsa"
-"crypto/sha256"
-"crypto/x509"
-"encoding/base64"
-"encoding/pem"
-"fmt"
-"math/big"
-"os"
+	"bytes"
+	"crypto/aes"
+	"crypto/cipher"
+	"crypto/md5"
+	"crypto/rand"
+	"crypto/rsa"
+	"crypto/sha256"
+	"crypto/x509"
+	"encoding/base64"
+	"encoding/pem"
+	"fmt"
+	"os"
 )
 
 type  Crypto struct {
@@ -60,26 +58,7 @@ func (this *Crypto) AesDecryptCBC(encrypted []byte) (decrypted []byte) {
 	decrypted = pkcs5UnPadding(decrypted)                       // 去除补全码
 	return decrypted
 }
-func  (this *Crypto) CreateDsa(str string)(*big.Int,*big.Int,*dsa.PublicKey){
-	var param dsa.Parameters
-	// L1024N160是一个枚举，根据L1024N160来决定私钥的长度（L N）
-	dsa.GenerateParameters(&param, rand.Reader, dsa.L1024N160)
-	// 定义私钥的变量
-	var privateKey dsa.PrivateKey
-	// 设置私钥的参数
-	privateKey.Parameters = param
-	// 生成密钥对
-	dsa.GenerateKey(&privateKey, rand.Reader)
-	publicKey := privateKey.PublicKey
-	message := []byte(str)
 
-	// 进入签名操作
-	r, s, _ := dsa.Sign(rand.Reader, &privateKey, message)
-	return r,s,&publicKey
-}
-func  (this *Crypto) DsaVerify(str string,r *big.Int,s *big.Int, publicKey *dsa.PublicKey) bool{
-	return dsa.Verify(publicKey, []byte(str), r, s)
-}
 func  (this *Crypto)Sha256(str string) string{
 	hash:=sha256.Sum256([]byte(str))
 	return fmt.Sprintf("%x",hash)

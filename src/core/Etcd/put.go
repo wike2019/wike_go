@@ -8,6 +8,7 @@ import (
 	"time"
 )
 
+//插入数据
 func (this *EtcdCtl) Put(key string,value string,attrs ...*OperationAttr) interface{} {
 	kv:=clientv3.NewKV(this.EtcdClient)
 	leaseId:=OperationAttrs(attrs).

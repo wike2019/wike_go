@@ -6,6 +6,7 @@ import (
 	"go.etcd.io/etcd/clientv3"
 )
 
+//锁
 func (this * EtcdCtl) Lock(lockName string,fn func(params ...interface{}),params ...interface{}) error {
 		// 1. 上锁
 		// 1.1 创建租约

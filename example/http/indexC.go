@@ -136,6 +136,18 @@ func(this *IndexController) Grpc (ctx *gin.Context) Web.Json {
 	rsp,_:=svc.GetUserScore(ctx,&services.UserScoreRequest{Users: users})
 	return  rsp
 }
+
+func(this *IndexController) Grpc5(ctx *gin.Context) Web.Json {
+	// 1、从对象池 获取新闻缓存 对象
+	client:=Grpc.NewClient(Grpc.KeyPath("./keys"),Grpc.WithEtcd("wike3",LoadBalance.RoundRobinByWeight,ctx.ClientIP()))
+	defer client.Close()
+	svc:= services.NewUserServiceClient(client)
+	users:=make([]*services.UserInfo,0)
+	users=append(users,&services.UserInfo{UserId: 1})
+	users=append(users,&services.UserInfo{UserId: 2})
+	rsp,_:=svc.GetUserScore(ctx,&services.UserScoreRequest{Users: users})
+	return  rsp
+}
 func(this *IndexController) Grpc2 (ctx *gin.Context) string {
 	// 1、从对象池 获取新闻缓存 对象
 	client:=Grpc.NewClient(Grpc.KeyPath("./keys"),Grpc.Host("wike.com"),Grpc.Ip("192.168.3.3:8081"))
@@ -215,6 +227,7 @@ func(this *IndexController) Build(goft *Web.Goft){
 		Handle("GET","/grpc2",this.Grpc2).
 		Handle("GET","/grpc3",this.Grpc3).
 		Handle("GET","/grpc4",this.Grpc4).
+		Handle("GET","/grpc5",this.Grpc5).
 
 	HandleWithFairing("GET","/E",this.E, NewTestIn())
 }

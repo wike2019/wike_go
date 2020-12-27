@@ -8,11 +8,12 @@ import (
 )
 
 var etcdPool *sync.Pool
-
+//池
 func init()  {
 	etcdPool=&sync.Pool{
 		New: func() interface{}{
-			EtcdClient:= Result.Result(Ioc.New().ExprData["EtcdCtl"]).Unwrap().(*EtcdCtl)
+			var value *EtcdCtl
+			EtcdClient:= Result.Result(Ioc.New().Get(value)).Unwrap().(*EtcdCtl)
 			return EtcdClient
 		},
 	}

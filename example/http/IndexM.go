@@ -1,9 +1,7 @@
 package http
 
 import (
-	"fmt"
 	"github.com/gin-gonic/gin"
-	"github.com/gin-gonic/gin/binding"
 	"github.com/wike2019/wike_go/src/Web"
 	"github.com/wike2019/wike_go/src/util/Validate"
 )
@@ -64,10 +62,12 @@ func NewTestIn() *TestIn {
 }
 func(this *TestIn) OnRequest(ctx *gin.Context) error{
 	u:=&User{}
-	binding.Form.Bind(ctx.Request,u)
+	err:=ctx.ShouldBindQuery(u)
+
 	//验证器的使用
-	err:=Validate.New().Validate.Struct(u)
-	fmt.Println(err)
+	//err=Validate.New().Validate.Struct(u)
+
+
 	if err !=nil{
 		Web.Throw(Validate.New().Msg(u,err),503,ctx)
 	}

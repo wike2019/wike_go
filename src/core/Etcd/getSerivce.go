@@ -7,9 +7,9 @@ import (
 	"regexp"
 )
 
-
+//取得数据
 func(this *EtcdCtl) LoadService (name string) ([]*ServiceInfo,error) {
-	res,err:=this.Get(key_prefix,WithPrevKV())
+	res,err:=this.Get(keyPrefix,WithPrevKV())
 	if err!=nil{
 		return nil,err
 	}
@@ -21,8 +21,9 @@ func(this *EtcdCtl) LoadService (name string) ([]*ServiceInfo,error) {
 	}
 	return Services,nil
 }
+//解析服务
 func(this *EtcdCtl) parseService(key []byte,value []byte,Services []*ServiceInfo,name string) []*ServiceInfo {
-	str:=fmt.Sprintf("%s([^/]+)/([^/]+)",key_prefix)
+	str:=fmt.Sprintf("%s([^/]+)/([^/]+)", keyPrefix)
 	reg:=regexp.MustCompile(str)
 	if reg.Match(key){
 		idandname:=reg.FindSubmatch(key)
@@ -35,11 +36,13 @@ func(this *EtcdCtl) parseService(key []byte,value []byte,Services []*ServiceInfo
 	}
 	return Services
 }
+
+//选择器
 func(this *EtcdCtl)  Seletor(Services []*ServiceInfo,selectType int,ip string)(LoadBalance.NodeBalance,error)  {
 	if LB.NeedReLoad(len(Services)){
 		LB.Clear()
 		for _,node:=range Services{
-			node.CWeight=0
+			node.SetCWeight(0)
 			LB.AddNode(node)
 		}
 	}

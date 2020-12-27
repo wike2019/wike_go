@@ -11,17 +11,18 @@ import (
 
 //专门处理string类型的操作
 type RedisStringOperation struct{
-	ctx context.Context
-	Redis  *redis.Client `inject:"-"`
+	Ctx   context.Context
+	Redis *redis.Client `inject:"-"`
 }
 
 func init()  {
 	Ioc.New().Beans(NewStringOperation())
 }
 func NewStringOperation() *RedisStringOperation {
-	return &RedisStringOperation{ctx:context.Background()}
+	return &RedisStringOperation{Ctx: context.Background()}
 }
 func(this *RedisStringOperation) Name() string{
+
 	return "RedisStringOperation"
 }
 func(this *RedisStringOperation) Set(key string,value interface{},
@@ -32,21 +33,21 @@ func(this *RedisStringOperation) Set(key string,value interface{},
 
 	nx:=OperationAttrs(attrs).Find(ATTR_NX).Unwrap_Or(nil)
 	if nx!=nil{
-		return Result.Result(this.Redis.SetNX(this.ctx,key,value,exp).Result())
+		return Result.Result(this.Redis.SetNX(this.Ctx,key,value,exp).Result())
 	}
 	xx:=OperationAttrs(attrs).Find(ATTR_XX).Unwrap_Or(nil)
 	if xx!=nil{
-		return Result.Result(this.Redis.SetXX(this.ctx,key,value,exp).Result())
+		return Result.Result(this.Redis.SetXX(this.Ctx,key,value,exp).Result())
 	}
-    return Result.Result(this.Redis.Set(this.ctx,key,value,
+    return Result.Result(this.Redis.Set(this.Ctx,key,value,
    	   exp).Result())
 
 }
 func(this *RedisStringOperation) Get(key string ) *Result.ErrorResult {
-	 return Result.Result(this.Redis.Get(this.ctx,key).Result())
+	 return Result.Result(this.Redis.Get(this.Ctx,key).Result())
 }
 
 func(this *RedisStringOperation) MGet(keys ...string )*Result.ErrorResult {
-	return Result.Result(this.Redis.MGet(this.ctx,keys...).Result())
+	return Result.Result(this.Redis.MGet(this.Ctx,keys...).Result())
 }
 

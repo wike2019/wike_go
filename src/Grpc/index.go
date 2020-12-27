@@ -3,8 +3,13 @@ package Grpc
 import (
 	"crypto/tls"
 	"crypto/x509"
+	"fmt"
 	grpc_middleware "github.com/grpc-ecosystem/go-grpc-middleware"
 	grpc_recovery "github.com/grpc-ecosystem/go-grpc-middleware/recovery"
+	"github.com/wike2019/wike_go/src/Result"
+	"github.com/wike2019/wike_go/src/core/Etcd"
+	"github.com/wike2019/wike_go/src/core/Ioc"
+	"github.com/wike2019/wike_go/src/util/LoadBalance"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials"
 	"io/ioutil"
@@ -17,11 +22,23 @@ type  Grpc struct {
    ChainServer []grpc.UnaryServerInterceptor
    Ip string
    Host string
+   Selector int
+   ServerName string
+   ClientIp string
+   Etcdctl  *Etcd.EtcdCtl
 }
 
+func init() {
+	Ioc.New().Beans(new(Grpc))
+}
+
+func (this *Grpc) Name()string  {
+	return  "Grpc"
+}
 
 func NewServer(fs ...GrpcAttrFunc) *grpc.Server {
 	u:= new(Grpc)
+
 	u.ChainServer=make([]grpc.UnaryServerInterceptor,0)
 	u.KeyPath="./keys"
 	u.ChainStreamServer=make([]grpc.StreamServerInterceptor,0)
@@ -48,7 +65,17 @@ func NewClient(fs ...GrpcAttrFunc) *grpc.ClientConn {
 	u:= new(Grpc)
 	u.KeyPath="./keys"
 	u.Host="localhost"
+	u.Etcdctl=Etcd.EtcdCache()
+	defer  Etcd.ReleaseEtcdCache(u.Etcdctl)
 	GrpcAttrFuncs(fs).apply(u)
+
+	if u.ServerName !=""{
+		m,_:=u.Etcdctl.LoadService(u.ServerName)
+		info := Result.Result(u.Etcdctl.Seletor(m, LoadBalance.RoundRobinByWeight, u.ClientIp)).Unwrap().(LoadBalance.NodeBalance)
+		u.Host=info.GetNode().(*Etcd.ServiceInfo).ServiceHost
+		u.Ip=info.GetNode().(*Etcd.ServiceInfo).ServiceAddr
+		fmt.Println(u)
+	}
 	conn,err:=grpc.Dial(u.Ip,grpc.WithTransportCredentials(u.GetClientcert(u.KeyPath,u.Host)))
 		if err!=nil{
 		log.Fatal(err)

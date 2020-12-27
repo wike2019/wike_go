@@ -6,6 +6,7 @@ import (
 	"go.etcd.io/etcd/clientv3"
 )
 type empty struct {}
+//可添加的属性
 const (
 	ATTR_WithPrevKV="WithPrevKV"   //过期时间
 	ATTR_Lease ="Lease"  // setnx
@@ -17,6 +18,7 @@ type OperationAttr struct {
 	Value interface{}
 }
 type OperationAttrs []*OperationAttr
+//查找对应属性限制传入的参数
 func(this OperationAttrs) Find(name string) *Result.ErrorResult { //查找指定属性
 	for _,attr:=range this {
 		if attr.Name==name{
@@ -25,12 +27,12 @@ func(this OperationAttrs) Find(name string) *Result.ErrorResult { //查找指定
 	}
 	return Result.Result(nil,fmt.Errorf("OperationAttrs found error:%s",name))
 }
-func WithPrevKV() *OperationAttr  {  //设置过期时间
+func WithPrevKV() *OperationAttr  {  //设置前缀
 	return &OperationAttr{Name:ATTR_WithPrevKV,Value:empty{}}
 }
-func WithLease(Lease clientv3.LeaseID) *OperationAttr  {  //设置set 的NX
+func WithLease(Lease clientv3.LeaseID) *OperationAttr  {  //设置租约
 	return &OperationAttr{Name:ATTR_Lease,Value:Lease}
 }
-func WithTime(time int64) *OperationAttr  {  //设置set 的XX
+func WithTime(time int64) *OperationAttr  {  //设置过期时间
 	return &OperationAttr{Name:ATTR_WithTime,Value:time}
 }

@@ -7,6 +7,8 @@ import (
 	"time"
 )
 
+
+//续租
 func (this * EtcdCtl)  KeepAlive(LeaseID clientv3.LeaseID) error{
 	keepaliveRes,err:=this.EtcdClient.KeepAlive(this.ctx,LeaseID)
 	if err!=nil{
@@ -15,6 +17,7 @@ func (this * EtcdCtl)  KeepAlive(LeaseID clientv3.LeaseID) error{
 	go lisKeepAlive(keepaliveRes)
 	return nil
 }
+
 func (this * EtcdCtl)  KeepAliveWithContext(ctx context.Context,LeaseID clientv3.LeaseID) error{
 	keepaliveRes,err:=this.EtcdClient.KeepAlive(ctx,LeaseID)
 	if err!=nil{

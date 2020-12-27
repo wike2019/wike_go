@@ -1,7 +1,7 @@
 package Etcd
 
 import "go.etcd.io/etcd/clientv3"
-
+//删除操作
 func (this *EtcdCtl) Del(key string,attrs ...*OperationAttr) (*clientv3.DeleteResponse,error) {
 	kv:=clientv3.NewKV(this.EtcdClient)
 	prev:=OperationAttrs(attrs).
@@ -13,7 +13,7 @@ func (this *EtcdCtl) Del(key string,attrs ...*OperationAttr) (*clientv3.DeleteRe
 
 	return  kv.Delete(this.ctx,key)
 }
-
+//删除租约
 func (this *EtcdCtl) DelLease(key clientv3.LeaseID) (*clientv3.LeaseRevokeResponse, error) {
 	lease := clientv3.NewLease(this.EtcdClient)
 	return  lease.Revoke(this.ctx,key)

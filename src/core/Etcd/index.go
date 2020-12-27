@@ -10,19 +10,21 @@ type EtcdCtl struct {
 	EtcdClient *clientv3.Client  `inject:"-"`
 	ctx context.Context
 }
+//实现bean接口
+func (this *EtcdCtl) Name() string{
+	return  "EtcdCtl"
+}
 
 func init() {
 	Ioc.New().Beans(New())
 }
-var cachId=make(map[string]clientv3.LeaseID)
-var key_prefix ="/coreV1/services/"
+var cacheId =make(map[string]clientv3.LeaseID)
+const keyPrefix ="/coreV1/services/"
 
 func New()  *EtcdCtl{
 	return &EtcdCtl{ctx:context.Background()}
 }
-func (this *EtcdCtl) Name() string{
-	return  "EtcdCtl"
-}
+
 
 
 

@@ -50,6 +50,6 @@ func(this *RedisConfig) Redis()  *redis.Client{
 	if err!=nil{
 		log.Fatal(fmt.Errorf("connect error:%s",err))
 	}
-	log.Println(pong)
+	log.Println("redis链接成功"+pong)
 	return redisClient
 }

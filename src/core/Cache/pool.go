@@ -9,11 +9,13 @@ import (
 )
 
 var NewsCachePool *sync.Pool
-
+//缓冲池
 func init()  {
 	NewsCachePool=&sync.Pool{
 		New: func() interface{} {
-			RedisStringOperation:= Result.Result(Ioc.New().ExprData["RedisStringOperation"]).Unwrap()
+			var value *Redis.RedisStringOperation
+			RedisStringOperation:= Result.Result(Ioc.New().Get(value)).Unwrap()
+			//缓存5分钟
 			return Redis.NewSimpleCache(RedisStringOperation.(*Redis.RedisStringOperation),time.Second*300, Redis.Serilizer_JSON)
 		},
 	}

@@ -1,62 +1,58 @@
 package Validate
 
 import (
-	"github.com/go-playground/locales/zh"
+	"github.com/gin-gonic/gin/binding"
 	ut "github.com/go-playground/universal-translator"
 	"github.com/go-playground/validator/v10"
-	zh2 "github.com/go-playground/validator/v10/translations/zh"
 	"reflect"
+	"strings"
 	"sync"
 )
 
 type Validate struct {
 	Validate *validator.Validate
-	msg map[string]string
 	Trans ut.Translator
 }
+
+
 var once sync.Once
 var CheckVaid *Validate
 func New() *Validate {
 	once.Do(func() {
-		uni := ut.New(zh.New(), zh.New())
 		v:=validator.New()
-		v.SetTagName("checking")
-		trans, _ := uni.GetTranslator("zh")
-		zh2.RegisterDefaultTranslations(v, trans)
-		CheckVaid= &Validate{Validate:v,msg: map[string]string{},Trans:trans}
+		v.SetTagName("binding")
+		CheckVaid= &Validate{Validate:v}
 	})
 	return CheckVaid
 }
 
-func (this * Validate)AddValiDate(name string,checkfunc validator.Func,msg string)  {
-	this.msg[name]=msg
+func (this * Validate)AddValiDate(name string,checkfunc validator.Func)  {
 	this.Validate.RegisterValidation(name,checkfunc)
+	binding.Validator.Engine().(*validator.Validate).RegisterValidation(name,checkfunc)
 }
 
 func (this * Validate)Msg(obj interface{},errs error)string  {
 
 	err:=errs.(validator.ValidationErrors)[0]
-
 	field:=err.Field()
 	name:=err.Tag()
-	errMsg:=err.Translate(CheckVaid.Trans)
-	msg,ok:=this.msg[name]
-	if !ok {
-		return this.GetValidMsg(obj,field,errMsg)
-	}
-	return  msg
+	return this.GetValidMsg(obj,field,name,err.Error())
+
 }
 
 
-func (this * Validate) GetValidMsg(obj interface{},field string,err string) string {
+func (this * Validate) GetValidMsg(obj interface{},field string,tagName string,err string) string {
 
 	getObj := reflect.TypeOf(obj)
 	if f,exist:=getObj.Elem().FieldByName(field);exist{
 		msg:=f.Tag.Get("vmsg");
-		if  msg!=""{
-			return  msg
+		msginfo:=strings.Split(msg,",")
+		for _,value:=range msginfo  {
+			errMsg:=strings.Split(value,"=")
+			if errMsg[0]==tagName{
+				return  errMsg[1]
+			}
 		}
-		return err
 	}
 	return err
 }

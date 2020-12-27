@@ -43,3 +43,8 @@ func (this *Ioc) Config(cfgs ...interface{}) *Ioc { //根据方法注入反射
 	Injector.BeanFactory.Config(cfgs...)
 	return this
 }
+
+func (this *Ioc) Get(name interface{}) interface{} { //根据方法注入反射
+	return  Injector.BeanFactory.Get(name)
+
+}

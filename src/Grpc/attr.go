@@ -35,3 +35,10 @@ func KeyPath(path string) GrpcAttrFunc  {
 	}
 }
 
+func WithEtcd(name string,selector int,clientIp string) GrpcAttrFunc  {
+	return func(u *Grpc) {
+		u.ServerName=name
+		u.Selector=selector
+		u.ClientIp=clientIp
+	}
+}

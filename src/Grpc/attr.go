@@ -9,12 +9,12 @@ func(this GrpcAttrFuncs) apply(u *Grpc)  {
 		f(u)
 	}
 }
-func StreamServerInterceptor(fn grpc.UnaryServerInterceptor) GrpcAttrFunc  {
+func ServerInterceptor(fn grpc.UnaryServerInterceptor) GrpcAttrFunc  {
 	return func(u *Grpc) {
 		u.ChainServer=append(u.ChainServer,fn)
 	}
 }
-func ServerInterceptor(fn grpc.StreamServerInterceptor) GrpcAttrFunc  {
+func StreamServerInterceptor (fn grpc.StreamServerInterceptor) GrpcAttrFunc  {
 	return func(u *Grpc) {
 		u.ChainStreamServer=append(u.ChainStreamServer,fn)
 	}

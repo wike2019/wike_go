@@ -180,6 +180,7 @@ github.com/ugorji/go/codec v1.2.2/go.mod h1:OM8g7OAy52uYl3Yk+RE/3AS1nXFn1Wh4PPLt
 github.com/urfave/cli v1.20.0/go.mod h1:70zkFmudgCuE/ngEzBv17Jvp/497gISqfk5gWijbERA=
 github.com/wike2019/wike_go v1.0.6 h1:u/5mZrmVmqHe4P6iR14zhP8aX6tm4ckqy+w6dF0l0Cs=
 github.com/wike2019/wike_go v1.0.6/go.mod h1:vHkBROk8PtEmMKP/VHjA+CIuxvatDh6kjDhNHf0J9DA=
+github.com/wike2019/wike_go v1.0.7 h1:EZh9wG4NVFFTBqfP3YdGPvQjujf9O4mJhAam1OYay+I=
 github.com/wike2019/wike_go v1.0.7/go.mod h1:vHkBROk8PtEmMKP/VHjA+CIuxvatDh6kjDhNHf0J9DA=
 github.com/xiang90/probing v0.0.0-20190116061207-43a291ad63a2/go.mod h1:UETIi67q53MR2AWcXfiuqkDkRtnGDLqkBTpCHuJHxtU=
 go.etcd.io/bbolt v1.3.3/go.mod h1:IbVyRI1SCnLcuJnV2u8VeU0CEYM7e686BmAb1XKL+uU=

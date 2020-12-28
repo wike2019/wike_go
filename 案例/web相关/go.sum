@@ -182,6 +182,8 @@ github.com/wike2019/wike_go v1.0.6 h1:u/5mZrmVmqHe4P6iR14zhP8aX6tm4ckqy+w6dF0l0C
 github.com/wike2019/wike_go v1.0.6/go.mod h1:vHkBROk8PtEmMKP/VHjA+CIuxvatDh6kjDhNHf0J9DA=
 github.com/wike2019/wike_go v1.0.7 h1:EZh9wG4NVFFTBqfP3YdGPvQjujf9O4mJhAam1OYay+I=
 github.com/wike2019/wike_go v1.0.7/go.mod h1:vHkBROk8PtEmMKP/VHjA+CIuxvatDh6kjDhNHf0J9DA=
+github.com/wike2019/wike_go v1.0.9 h1:9Ro7Xj9UXp5LwlmD4i/vw0cD51CEq9BB6yWrdITFZ+M=
+github.com/wike2019/wike_go v1.0.9/go.mod h1:vHkBROk8PtEmMKP/VHjA+CIuxvatDh6kjDhNHf0J9DA=
 github.com/xiang90/probing v0.0.0-20190116061207-43a291ad63a2/go.mod h1:UETIi67q53MR2AWcXfiuqkDkRtnGDLqkBTpCHuJHxtU=
 go.etcd.io/bbolt v1.3.3/go.mod h1:IbVyRI1SCnLcuJnV2u8VeU0CEYM7e686BmAb1XKL+uU=
 go.etcd.io/etcd v3.3.25+incompatible h1:V1RzkZJj9LqsJRy+TUBgpWSbZXITLB819lstuTFoZOY=

@@ -1,7 +1,7 @@
 package main
 
 import (
-	"github.com/wike2019/wike_go/src/core/Ioc"
+
 )
 
 func main()  {

@@ -2,8 +2,7 @@ package main
 
 import (
 	"fmt"
-	"github.com/wike2019/wike_go/src/core/Etcd"
-	"github.com/wike2019/wike_go/src/core/Ioc"
+
 )
 
 type EtcdCall struct {

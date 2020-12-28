@@ -17,6 +17,7 @@ func main()  {
 		Mount("/string", NewStringController()).
 	    Mount("/json", NewJsonController()).
 		Mount("/sql", NewSqlController()).
+		Mount("/error", NewErrorController()).
 		Mount("/middle", NewMiddleController())
 
 	Ioc.New().ApplyAll()

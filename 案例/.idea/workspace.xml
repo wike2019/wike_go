@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="e6bd9d1a-a2db-4ff0-8863-a84ee64787bd" name="默认更改列表" comment="" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Go File" />
+      </list>
+    </option>
+  </component>
+  <component name="GOROOT" path="C:\Go" />
+  <component name="GoLibraries">
+    <option name="urls">
+      <list>
+        <option value="file://H:/go_study_path" />
+      </list>
+    </option>
+    <option name="useGoPathFromSystemEnvironment" value="false" />
+  </component>
+  <component name="ProjectId" id="1mDmWsgJj25yVwTsBbmkEn4XTez" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showExcludedFiles" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="DefaultGoTemplateProperty" value="Go File" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="configurable.Global.GOPATH.is.expanded" value="true" />
+    <property name="configurable.Module.GOPATH.is.expanded" value="false" />
+    <property name="configurable.Project.GOPATH.is.expanded" value="true" />
+    <property name="go.import.settings.migrated" value="true" />
+    <property name="go.sdk.automatically.set" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/Grpc案例/服务发现调用" />
+    <property name="settings.editor.selected.configurable" value="go.vgo" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="H:\我的项目\案例\Grpc案例\服务发现调用" />
+      <recent name="H:\我的项目\案例\Grpc案例\服务端流" />
+      <recent name="H:\我的项目\案例\Grpc案例\客户端流" />
+      <recent name="H:\我的项目\案例\Grpc案例\普通调用" />
+      <recent name="H:\我的项目\案例\Grpc案例\双向流" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="H:\我的项目\案例\Grpc案例\双向流" />
+      <recent name="H:\我的项目\案例\Grpc案例" />
+      <recent name="H:\我的项目\案例\加密" />
+      <recent name="H:\我的项目\案例\etcd" />
+      <recent name="H:\我的项目\案例\任务组件\定时任务" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Go Build.go build demo (5)">
+    <configuration name="go build demo (1)" type="GoApplicationRunConfiguration" factoryName="Go Application" temporary="true" nameIsGenerated="true">
+      <module name="案例" />
+      <working_directory value="$PROJECT_DIR$/Grpc案例/双向流" />
+      <kind value="FILE" />
+      <filePath value="$PROJECT_DIR$/Grpc案例/双向流/main.go" />
+      <package value="demo" />
+      <directory value="$PROJECT_DIR$/" />
+      <output_directory value="$PROJECT_DIR$/Grpc案例/双向流" />
+      <method v="2" />
+    </configuration>
+    <configuration name="go build demo (2)" type="GoApplicationRunConfiguration" factoryName="Go Application" temporary="true" nameIsGenerated="true">
+      <module name="案例" />
+      <working_directory value="$PROJECT_DIR$/Grpc案例/客户端流" />
+      <kind value="FILE" />
+      <filePath value="$PROJECT_DIR$/Grpc案例/客户端流/main.go" />
+      <package value="demo" />
+      <directory value="$PROJECT_DIR$/" />
+      <method v="2" />
+    </configuration>
+    <configuration name="go build demo (3)" type="GoApplicationRunConfiguration" factoryName="Go Application" temporary="true" nameIsGenerated="true">
+      <module name="案例" />
+      <working_directory value="$PROJECT_DIR$/Grpc案例/普通调用" />
+      <kind value="FILE" />
+      <filePath value="$PROJECT_DIR$/Grpc案例/普通调用/main.go" />
+      <package value="demo" />
+      <directory value="$PROJECT_DIR$/" />
+      <method v="2" />
+    </configuration>
+    <configuration name="go build demo (4)" type="GoApplicationRunConfiguration" factoryName="Go Application" temporary="true" nameIsGenerated="true">
+      <module name="案例" />
+      <working_directory value="$PROJECT_DIR$/Grpc案例/服务端流" />
+      <kind value="FILE" />
+      <filePath value="$PROJECT_DIR$/Grpc案例/服务端流/main.go" />
+      <package value="demo" />
+      <directory value="$PROJECT_DIR$/" />
+      <method v="2" />
+    </configuration>
+    <configuration name="go build demo (5)" type="GoApplicationRunConfiguration" factoryName="Go Application" temporary="true" nameIsGenerated="true">
+      <module name="案例" />
+      <working_directory value="$PROJECT_DIR$/Grpc案例/服务发现调用" />
+      <kind value="FILE" />
+      <filePath value="$PROJECT_DIR$/Grpc案例/服务发现调用/main.go" />
+      <package value="demo" />
+      <directory value="$PROJECT_DIR$/" />
+      <method v="2" />
+    </configuration>
+    <configuration name="go build demo" type="GoApplicationRunConfiguration" factoryName="Go Application" nameIsGenerated="true">
+      <module name="案例" />
+      <working_directory value="$PROJECT_DIR$/Grpc案例/服务端" />
+      <go_parameters value="-i" />
+      <kind value="DIRECTORY" />
+      <filePath value="$PROJECT_DIR$/" />
+      <directory value="$PROJECT_DIR$/Grpc案例/服务端" />
+      <method v="2" />
+    </configuration>
+    <list>
+      <item itemvalue="Go Build.go build demo" />
+      <item itemvalue="Go Build.go build demo (1)" />
+      <item itemvalue="Go Build.go build demo (2)" />
+      <item itemvalue="Go Build.go build demo (3)" />
+      <item itemvalue="Go Build.go build demo (4)" />
+      <item itemvalue="Go Build.go build demo (5)" />
+    </list>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Go Build.go build demo (5)" />
+        <item itemvalue="Go Build.go build demo (4)" />
+        <item itemvalue="Go Build.go build demo (3)" />
+        <item itemvalue="Go Build.go build demo (2)" />
+        <item itemvalue="Go Build.go build demo (1)" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="ServiceViewManager">
+    <option name="viewStates">
+      <list>
+        <serviceView>
+          <treeState>
+            <expand />
+            <select />
+          </treeState>
+        </serviceView>
+      </list>
+    </option>
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="1" />
+  </component>
+  <component name="VgoProject">
+    <integration-enabled>true</integration-enabled>
+    <proxy>https://goproxy.io</proxy>
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="414" y="173" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1609117430392">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="414" y="173" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1609117430392" />
+    <state x="796" y="321" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1609060117732">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="796" y="321" key="#com.intellij.fileTypes.FileTypeChooser/0.0.1920.1040@0.0.1920.1040" timestamp="1609060117732" />
+    <state x="678" y="152" key="#go_build_demo_(1)" timestamp="1609117049297">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="678" y="152" key="#go_build_demo_(1)/0.0.1920.1040@0.0.1920.1040" timestamp="1609117049297" />
+    <state x="678" y="152" key="#go_build_demo_(2)" timestamp="1609117090969">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="678" y="152" key="#go_build_demo_(2)/0.0.1920.1040@0.0.1920.1040" timestamp="1609117090969" />
+    <state x="678" y="152" key="#go_build_demo_(3)" timestamp="1609117128674">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="678" y="152" key="#go_build_demo_(3)/0.0.1920.1040@0.0.1920.1040" timestamp="1609117128674" />
+    <state x="678" y="152" key="#go_build_demo_(4)" timestamp="1609117154033">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="678" y="152" key="#go_build_demo_(4)/0.0.1920.1040@0.0.1920.1040" timestamp="1609117154033" />
+    <state x="678" y="152" key="#go_build_demo_(5)" timestamp="1609117282412">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="678" y="152" key="#go_build_demo_(5)/0.0.1920.1040@0.0.1920.1040" timestamp="1609117282412" />
+    <state x="740" y="273" key="FileChooserDialogImpl" timestamp="1609116990320">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="740" y="273" key="FileChooserDialogImpl/0.0.1920.1040@0.0.1920.1040" timestamp="1609116990320" />
+    <state width="1876" height="277" key="GridCell.Tab.0.bottom" timestamp="1609117726593">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1876" height="277" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1609117726593" />
+    <state width="1876" height="277" key="GridCell.Tab.0.center" timestamp="1609117726593">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1876" height="277" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1609117726593" />
+    <state width="1876" height="277" key="GridCell.Tab.0.left" timestamp="1609117726593">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1876" height="277" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1609117726593" />
+    <state width="1876" height="277" key="GridCell.Tab.0.right" timestamp="1609117726593">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1876" height="277" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1609117726593" />
+    <state x="461" y="150" key="SettingsEditor" timestamp="1609036812553">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="461" y="150" key="SettingsEditor/0.0.1920.1040@0.0.1920.1040" timestamp="1609036812553" />
+    <state x="623" y="225" width="672" height="678" key="search.everywhere.popup" timestamp="1609042904089">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="623" y="225" width="672" height="678" key="search.everywhere.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1609042904089" />
+    <state x="682" y="430" key="vcs.readOnlyHandler.ReadOnlyStatusDialog" timestamp="1609059433485">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="682" y="430" key="vcs.readOnlyHandler.ReadOnlyStatusDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1609059433485" />
+  </component>
+</project>

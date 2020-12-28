@@ -1,0 +1,10 @@
+syntax="proto3";
+package services;
+import "Models.proto";
+
+service UserService{
+    rpc GetUserScore (UserScoreRequest) returns (UserScoreResponse);
+    rpc GetUserScoreByServerStream(UserScoreRequest) returns (stream UserScoreResponse);
+    rpc GetUserScoreByClientStream(stream UserScoreRequest) returns (UserScoreResponse);
+    rpc GetUserScoreByTWS(stream UserScoreRequest) returns (stream UserScoreResponse);
+}

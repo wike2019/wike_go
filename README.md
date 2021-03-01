@@ -1,6 +1,6 @@
 # 在web框架gin的基础上做的2次集成，同时支持grpc开发，支持服务器发现
 
-安装：go get -u github.com/wike2019/wike_go@v1.0.9
+安装：go get -u github.com/wike2019/wike_go@v1.0.12
 
 ## 功能包含
 

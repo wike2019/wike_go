@@ -4,8 +4,7 @@ import (
 	"fmt"
 	"github.com/gin-gonic/gin"
 	"github.com/shenyisyn/goft-ioc"
-	"github.com/wike2019/wike_go/src/core/Config"
-	"github.com/wike2019/wike_go/src/core/Ioc"
+	"github.com/wike2019/wike_go/src/Core/Bean"
 	"strings"
 	"sync"
 )
@@ -34,10 +33,9 @@ func New() *Goft {
 
 	return g
 }
-func (this *Goft) Launch() {
-	var port int32 = 8080
-	if configData := Injector.BeanFactory.Get((*Config.SysConfig)(nil)); configData != nil {
-		port = configData.(*Config.SysConfig).Server.Port
+func (this *Goft) Launch(port int32) {
+	if port==0{
+		port=8080
 	}
 	this.Run(fmt.Sprintf(":%d", port))
 }
@@ -83,7 +81,7 @@ func (this *Goft) Mount(group string, classes ...IClass) *Goft {
 		this.currentGroup = group
 		class.Build(this)
 		//this.beanFactory.inject(class)
-		Ioc.New().Beans(class)
+		Bean.New().Beans(class)
 	}
 	return this
 }

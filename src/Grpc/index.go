@@ -7,9 +7,9 @@ import (
 	grpc_middleware "github.com/grpc-ecosystem/go-grpc-middleware"
 	grpc_recovery "github.com/grpc-ecosystem/go-grpc-middleware/recovery"
 	"github.com/wike2019/wike_go/src/Result"
-	"github.com/wike2019/wike_go/src/core/Etcd"
-	"github.com/wike2019/wike_go/src/core/Ioc"
-	"github.com/wike2019/wike_go/src/util/LoadBalance"
+	"github.com/wike2019/wike_go/src/Core/Etcd"
+	"github.com/wike2019/wike_go/src/Core/Bean"
+	"github.com/wike2019/wike_go/src/Util/LoadBalance"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials"
 	"io/ioutil"
@@ -29,7 +29,7 @@ type  Grpc struct {
 }
 
 func init() {
-	Ioc.New().Beans(new(Grpc))
+	Bean.New().Beans(new(Grpc))
 }
 
 func (this *Grpc) Name()string  {
@@ -38,15 +38,12 @@ func (this *Grpc) Name()string  {
 
 func NewServer(fs ...GrpcAttrFunc) *grpc.Server {
 	u:= new(Grpc)
-
 	u.ChainServer=make([]grpc.UnaryServerInterceptor,0)
 	u.KeyPath="./keys"
 	u.ChainStreamServer=make([]grpc.StreamServerInterceptor,0)
 	GrpcAttrFuncs(fs).apply(u)
-	u.ChainStreamServer=append(u.ChainStreamServer,StreamLoggingInterceptor)
 	u.ChainStreamServer=append(u.ChainStreamServer,grpc_recovery.StreamServerInterceptor())
 	u.ChainServer=append(u.ChainServer,RecoveryInterceptor)
-	u.ChainServer=append(u.ChainServer,LoggingInterceptor)
 
 	c:=u.GetServercert(u.KeyPath)
 	opts := []grpc.ServerOption{
@@ -68,12 +65,9 @@ func NewClient(fs ...GrpcAttrFunc) *grpc.ClientConn {
 	u.Etcdctl=Etcd.EtcdCache()
 	defer  Etcd.ReleaseEtcdCache(u.Etcdctl)
 	GrpcAttrFuncs(fs).apply(u)
-
 	if u.ServerName !=""{
-		m,_:=u.Etcdctl.LoadService(u.ServerName)
-		fmt.Println(u.ServerName)
-		info := Result.Result(u.Etcdctl.Seletor(m, LoadBalance.RoundRobinByWeight, u.ClientIp)).Unwrap().(LoadBalance.NodeBalance)
-
+		m:=u.Etcdctl.LoadService(u.ServerName)
+		info := Result.Result(u.Etcdctl.Seletor(m, LoadBalance.RoundRobinByWeight, u.ClientIp)).Unwrap()[0].(LoadBalance.NodeBalance)
 		u.Host=info.GetNode().(*Etcd.ServiceInfo).ServiceHost
 		u.Ip=info.GetNode().(*Etcd.ServiceInfo).ServiceAddr
 		fmt.Println(u)

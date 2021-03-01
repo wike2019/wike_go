@@ -16,7 +16,7 @@ func main()  {
 		Attach(NewTokenCheck(), NewAddVersion()).
 		Mount("/string", NewStringController()).
 	    Mount("/json", NewJsonController()).
-		Mount("/sql", NewSqlController()).
+		Mount("/Sql", NewSqlController()).
 		Mount("/error", NewErrorController()).
 		Mount("/middle", NewMiddleController())
 

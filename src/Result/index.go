@@ -1,49 +1,34 @@
 package Result
 
 
-import "fmt"
-
+type  Any interface{}
 type ErrorResult struct {
-	data interface{}
+	data []Any
 	err error
 }
-func(this *ErrorResult) Unwrap() interface{}  {
+func(this *ErrorResult) Unwrap() []Any {
 	if this.err!=nil{
 		panic(this.err.Error())
 	}
 	return this.data
 }
-func(this *ErrorResult) Unwrap_Or(v interface{}) interface{}  {
+func(this *ErrorResult) Unwrap_Or(v []Any) []Any {
 	if this.err!=nil{
 		return v
 	}
 	return this.data
 }
-func(this *ErrorResult) Unwrap_Or_Else(f func() interface{}) interface{}  {
+func(this *ErrorResult) Unwrap_Or_Else(f func() []Any) []Any {
 	if this.err!=nil{
 		return f()
 	}
 	return this.data
 }
-func Result(vs ...interface{}) *ErrorResult {
-	if len(vs)==1{
-		if vs[0]==nil{
-			return &ErrorResult{nil,nil}
-		}
-		if e,ok:=vs[0].(error);ok{
+func Result(vs ...Any) *ErrorResult {
+	for _,item :=range vs{
+		if e,ok:=item.(error);ok{
 			return &ErrorResult{nil,e}
 		}
-		if vs[0]!=nil{
-			return &ErrorResult{vs[0],nil}
-		}
 	}
-	if len(vs)==2{
-		if vs[1]==nil{
-			return &ErrorResult{vs[0],nil}
-		}
-		if e,ok:=vs[1].(error);ok{
-			return &ErrorResult{vs[0],e}
-		}
-	}
-	return &ErrorResult{ nil,fmt.Errorf("error result format")}
+	return &ErrorResult{vs,nil}
 }

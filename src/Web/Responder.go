@@ -2,7 +2,7 @@ package Web
 
 import (
 	"github.com/gin-gonic/gin"
-	"github.com/wike2019/wike_go/src/core/sql"
+	"github.com/wike2019/wike_go/src/Core/Sql"
 	"reflect"
 	"sync"
 )
@@ -54,12 +54,12 @@ func (this JsonResponder) RespondTo() gin.HandlerFunc {
 	}
 }
 
-type SqlQueryResponder func(*gin.Context) sql.Query
+type SqlQueryResponder func(*gin.Context) Sql.Query
 
 func (this SqlQueryResponder) RespondTo() gin.HandlerFunc {
 	return func(context *gin.Context) {
-		getQuery := getFairingHandler().handlerFairing(this, context).(sql.Query)
-		ret, err := sql.QueryForMapsByInterface(getQuery)
+		getQuery := getFairingHandler().handlerFairing(this, context).(Sql.Query)
+		ret, err := Sql.QueryForMapsByInterface(getQuery)
 		if err != nil {
 			panic(err)
 		}
@@ -67,12 +67,12 @@ func (this SqlQueryResponder) RespondTo() gin.HandlerFunc {
 	}
 }
 
-type SqlResponder func(*gin.Context) sql.SimpleQuery
+type SqlResponder func(*gin.Context) Sql.SimpleQuery
 
 func (this SqlResponder) RespondTo() gin.HandlerFunc {
 	return func(context *gin.Context) {
-		getSql := getFairingHandler().handlerFairing(this, context).(sql.SimpleQuery)
-		ret, err := sql.QueryForMaps(string(getSql), nil, []interface{}{}...)
+		getSql := getFairingHandler().handlerFairing(this, context).(Sql.SimpleQuery)
+		ret, err := Sql.QueryForMaps(string(getSql), nil, []interface{}{}...)
 		if err != nil {
 			panic(err)
 		}

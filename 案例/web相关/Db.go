@@ -1,7 +1,7 @@
 package main
 
 import (
-	_ "github.com/go-sql-driver/mysql"
+	_ "github.com/go-Sql-driver/mysql"
 	"github.com/jinzhu/gorm"
 	"log"
 )

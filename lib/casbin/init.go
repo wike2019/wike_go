@@ -6,8 +6,25 @@ import (
 	"os"
 )
 
+const modelconfig = `
+[request_definition]
+r = sub, obj, act
+
+[policy_definition]
+p = sub, obj, act
+
+[role_definition]
+g = _, _
+
+[policy_effect]
+e = some(where (p.eft == allow)) && !some(where (p.eft == deny))
+[matchers]
+m = g(r.sub, p.sub) && keyMatch(r.obj, p.obj) && (r.act == p.act || p.act == "*")
+`
+
 // 鉴权系统
 func New() *casbin.Enforcer {
+	os.WriteFile("model.conf", []byte(modelconfig), os.ModePerm)
 	os.WriteFile("policy.csv", []byte(""), os.ModePerm)
 	e, err := casbin.NewEnforcer("model.conf", "policy.csv")
 	if err != nil {

@@ -2,8 +2,8 @@ package controller
 
 import (
 	"github.com/gin-gonic/gin"
-	"github.com/wike2019/wike-go/MysqlInit"
-	"github.com/wike2019/wike-go/lib/bloom"
+	"github.com/wike2019/wike_go/MysqlInit"
+	"github.com/wike2019/wike_go/lib/bloom"
 	"gorm.io/gorm"
 	"time"
 )

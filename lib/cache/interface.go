@@ -1,7 +1,7 @@
 package cache
 
 import (
-	"github.com/wike2019/wike-go/lib/bloom"
+	"github.com/wike2019/wike_go/lib/bloom"
 	"time"
 )
 

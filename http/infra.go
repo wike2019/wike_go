@@ -2,11 +2,11 @@ package coreHttp
 
 import (
 	"github.com/gin-gonic/gin"
-	"github.com/wike2019/wike-go/lib/bloom"
-	casbinInit "github.com/wike2019/wike-go/lib/casbin"
-	cronInit "github.com/wike2019/wike-go/lib/cron"
-	zaplog "github.com/wike2019/wike-go/lib/log"
-	"github.com/wike2019/wike-go/lib/rate"
+	"github.com/wike2019/wike_go/lib/bloom"
+	casbinInit "github.com/wike2019/wike_go/lib/casbin"
+	cronInit "github.com/wike2019/wike_go/lib/cron"
+	zaplog "github.com/wike2019/wike_go/lib/log"
+	"github.com/wike2019/wike_go/lib/rate"
 	"go.uber.org/fx"
 	"net/http"
 	"reflect"

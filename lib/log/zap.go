@@ -2,7 +2,7 @@ package zaplog
 
 import (
 	"github.com/spf13/viper"
-	"github.com/wike2019/wike-go/lib/templog"
+	"github.com/wike2019/wike_go/lib/templog"
 	"go.uber.org/zap"
 	"go.uber.org/zap/zapcore"
 	"gopkg.in/natefinch/lumberjack.v2"

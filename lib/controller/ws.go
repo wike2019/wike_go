@@ -3,7 +3,7 @@ package controller
 import (
 	"github.com/gin-gonic/gin"
 	"github.com/gorilla/websocket"
-	"github.com/wike2019/wike-go/lib/utils"
+	"github.com/wike2019/wike_go/lib/utils"
 	"net/http"
 	"sync"
 	"time"

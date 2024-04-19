@@ -2,7 +2,7 @@ package coreHttp
 
 import (
 	"github.com/gin-gonic/gin"
-	casbinInit "github.com/wike2019/wike-go/lib/casbin"
+	casbinInit "github.com/wike2019/wike_go/lib/casbin"
 	"go.uber.org/fx"
 )
 

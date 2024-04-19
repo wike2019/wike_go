@@ -2,7 +2,7 @@ package config
 
 import (
 	"github.com/spf13/viper"
-	zaplog "github.com/wike2019/wike-go/lib/log"
+	zaplog "github.com/wike2019/wike_go/lib/log"
 )
 
 // 配置中心

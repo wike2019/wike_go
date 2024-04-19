@@ -57,6 +57,8 @@ type WsClient struct {
 
 func Broadcast(room string, data string) {
 	// 创建一个新的切片存储仍然有效的连接
+	WC.lock.Lock()
+	defer WC.lock.Unlock()
 	activeConns := make([]*websocket.Conn, 0)
 	connList := WC.Data.Get(room)
 	for _, conn := range connList {
@@ -72,6 +74,8 @@ func Broadcast(room string, data string) {
 	WC.Data.Set(room, activeConns)
 }
 func ping(room string) {
+	WC.lock.Lock()
+	defer WC.lock.Unlock()
 	// 创建一个新的切片存储仍然有效的连接
 	activeConns := make([]*websocket.Conn, 0)
 	connList := WC.Data.Get(room)

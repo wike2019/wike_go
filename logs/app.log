@@ -1,0 +1,39 @@
+2023-11-22T11:07:58.281+0800	debug	http/http.go:30	Starting HTTP server at :9990
+2023-12-19T17:11:01.343+0800	debug	http/http.go:30	Starting HTTP server at :9990
+2023-12-21T16:02:21.126+0800	debug	http/http.go:31	Starting HTTP server at :9990
+2023-12-21T16:02:47.880+0800	info	http/test.go:46	这个是依赖注入的日志
+2023-12-21T16:03:09.482+0800	info	http/test.go:20	这个是依赖注入的日志
+2023-12-21T16:03:39.333+0800	debug	http/http.go:31	Starting HTTP server at :9990
+2023-12-21T16:03:49.444+0800	info	http/test.go:20	这个是依赖注入的日志
+2023-12-21T16:04:44.248+0800	debug	http/http.go:31	Starting HTTP server at :9990
+2023-12-21T16:04:47.390+0800	info	http/test.go:20	这个是依赖注入的日志
+2023-12-21T16:05:53.792+0800	debug	http/http.go:31	Starting HTTP server at :9990
+2023-12-21T16:06:34.026+0800	debug	http/http.go:31	Starting HTTP server at :9990
+2023-12-21T16:06:38.205+0800	info	http/test.go:20	这个是依赖注入的日志
+2023-12-21T16:08:55.521+0800	debug	http/http.go:31	Starting HTTP server at :9990
+2023-12-21T16:10:45.621+0800	debug	http/http.go:35	Starting HTTP server at :9990
+2023-12-21T16:10:49.946+0800	info	http/test.go:20	这个是依赖注入的日志
+2023-12-21T16:11:24.762+0800	debug	http/http.go:35	Starting HTTP server at :9990
+2023-12-21T16:11:27.508+0800	info	http/test.go:20	这个是依赖注入的日志
+2023-12-21T16:11:45.960+0800	debug	http/http.go:35	Starting HTTP server at :9990
+2023-12-21T16:11:49.408+0800	info	http/test.go:20	这个是依赖注入的日志
+2023-12-21T16:12:30.849+0800	debug	http/http.go:35	Starting HTTP server at :9990
+2023-12-21T16:12:33.977+0800	info	http/test.go:20	这个是依赖注入的日志
+2023-12-21T16:13:11.775+0800	debug	http/http.go:35	Starting HTTP server at :9990
+2023-12-21T16:13:16.422+0800	info	http/test.go:20	这个是依赖注入的日志
+2023-12-21T16:14:25.473+0800	debug	http/http.go:35	Starting HTTP server at :9990
+2023-12-21T16:14:28.864+0800	info	http/test.go:20	这个是依赖注入的日志
+2023-12-21T16:15:19.855+0800	debug	http/http.go:35	Starting HTTP server at :9990
+2023-12-21T16:15:25.018+0800	info	http/test.go:20	这个是依赖注入的日志
+2023-12-21T16:16:03.037+0800	debug	http/http.go:37	Starting HTTP server at :9990
+2023-12-21T16:16:06.333+0800	info	http/test.go:20	这个是依赖注入的日志
+2023-12-21T16:19:59.021+0800	debug	http/http.go:37	Starting HTTP server at :9990
+2023-12-21T16:21:06.567+0800	debug	http/http.go:37	Starting HTTP server at :9990
+2023-12-21T16:39:25.090+0800	debug	http/http.go:43	Starting HTTP server at :9990
+2023-12-21T16:39:33.072+0800	info	http/test.go:20	这个是依赖注入的日志
+2023-12-21T16:39:33.075+0800	info	http/middleware.go:52	接口访问日志	{"path": "/api/v2/hello", "method": "GET", "http_host": "127.0.0.1:9990", "ua": "PostmanRuntime/7.29.2", "remote_addr": "127.0.0.1:57659", "status_code": 200, "error_code": 0, "error_msg": "", "body_size": 172, "client_ip": "127.0.0.1", "latency": 0.002532134}
+2023-12-21T16:40:05.345+0800	debug	http/http.go:43	Starting HTTP server at :9990
+2023-12-21T16:40:09.623+0800	info	http/test.go:20	这个是依赖注入的日志
+2023-12-21T16:40:09.624+0800	info	http/middleware.go:52	接口访问日志	{"path": "/api/v2/hello", "method": "GET", "http_host": "127.0.0.1:9990", "ua": "PostmanRuntime/7.29.2", "remote_addr": "127.0.0.1:57695", "status_code": 200, "error_code": 0, "error_msg": "", "body_size": 174, "client_ip": "127.0.0.1", "latency": 0.000973715}
+2023-12-21T16:40:17.753+0800	info	http/test.go:46	这个是依赖注入的日志
+2023-12-21T16:40:17.755+0800	info	http/middleware.go:52	接口访问日志	{"path": "/api/v2/ping", "method": "GET", "http_host": "127.0.0.1:9990", "ua": "PostmanRuntime/7.29.2", "remote_addr": "127.0.0.1:57695", "status_code": 200, "error_code": 0, "error_msg": "", "body_size": 476, "client_ip": "127.0.0.1", "latency": 0.001250649}

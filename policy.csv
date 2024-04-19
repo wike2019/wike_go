@@ -1,0 +1,4 @@
+p, admin, /api/v5/test2, GET
+p, wike, /api/v5/test, GET
+g, admin, default
+g, wike, admin

@@ -24,7 +24,10 @@ m = g(r.sub, p.sub) && keyMatch(r.obj, p.obj) && (r.act == p.act || p.act == "*"
 
 // 鉴权系统
 func New() *casbin.Enforcer {
-	os.WriteFile("model.conf", []byte(modelconfig), os.ModePerm)
+	_, err := os.Stat("model.conf")
+	if os.IsNotExist(err) {
+		os.WriteFile("model.conf", []byte(modelconfig), os.ModePerm)
+	}
 	os.WriteFile("policy.csv", []byte(""), os.ModePerm)
 	e, err := casbin.NewEnforcer("model.conf", "policy.csv")
 	if err != nil {

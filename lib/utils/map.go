@@ -19,6 +19,12 @@ func (this *MapSync[T]) Get(key string) T {
 	defer this.lock.RUnlock()
 	return this.m[key]
 }
+func (this *MapSync[T]) Delete(key string) {
+	this.lock.Lock()
+	defer this.lock.Unlock()
+	delete(this.m, key)
+}
+
 func (this *MapSync[T]) Keys() []string {
 	this.lock.RLock()
 	defer this.lock.RUnlock()

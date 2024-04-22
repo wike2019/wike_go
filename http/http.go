@@ -86,15 +86,15 @@ func (this *GCore) GetWithRbac(r *gin.RouterGroup, role string, path string, han
 	this.RoleCtl.AddRule(role, r.BasePath(), path, http.MethodGet)
 	r.GET(path, handler)
 }
-func (this *GCore) PostWithRbac(r *gin.RouterGroup, ctl *casbinInit.RoleCtl, role string, path string, handler gin.HandlerFunc) {
+func (this *GCore) PostWithRbac(r *gin.RouterGroup, role string, path string, handler gin.HandlerFunc) {
 	this.RoleCtl.AddRule(role, r.BasePath(), path, http.MethodPost)
 	r.POST(path, handler)
 }
-func (this *GCore) DelWithRbac(r *gin.RouterGroup, ctl *casbinInit.RoleCtl, role string, path string, handler gin.HandlerFunc) {
+func (this *GCore) DelWithRbac(r *gin.RouterGroup, role string, path string, handler gin.HandlerFunc) {
 	this.RoleCtl.AddRule(role, r.BasePath(), path, http.MethodDelete)
 	r.DELETE(path, handler)
 }
-func (this *GCore) PutWithRbac(r *gin.RouterGroup, ctl *casbinInit.RoleCtl, role string, path string, handler gin.HandlerFunc) {
+func (this *GCore) PutWithRbac(r *gin.RouterGroup, role string, path string, handler gin.HandlerFunc) {
 	this.RoleCtl.AddRule(role, r.BasePath(), path, http.MethodPut)
 	r.PUT(path, handler)
 }

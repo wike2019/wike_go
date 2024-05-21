@@ -9,6 +9,7 @@ import (
 type Cache interface {
 	Set(k string, x interface{}, d time.Duration)
 	Get(k string, obj interface{}) bool
+	Delete(k string) bool
 }
 
 // 实际缓存服务

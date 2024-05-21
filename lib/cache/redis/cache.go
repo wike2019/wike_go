@@ -43,3 +43,11 @@ func (this *Cache) Get(k string, obj interface{}) bool {
 	}
 	return false
 }
+
+func (this *Cache) Delete(k string) bool {
+	err := this.redis.Del(context.Background(), k).Err()
+	if err == nil {
+		return true
+	}
+	return false
+}

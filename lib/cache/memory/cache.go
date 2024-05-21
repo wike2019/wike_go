@@ -37,3 +37,8 @@ func (this *Cache) Set(k string, x interface{}, d time.Duration) {
 	b, _ := json.Marshal(x)
 	this.MemoryCache.Set(k, b, d)
 }
+
+func (this *Cache) Delete(k string) bool {
+	this.MemoryCache.Delete(k)
+	return true
+}

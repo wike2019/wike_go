@@ -81,6 +81,7 @@ func (this *GCore) NewHTTPServer(ControllerList []Controller, lc fx.Lifecycle, z
 					zap.Error(fmt.Sprintf("stop func is error: %s\n", err))
 				}
 			}
+			zap.Sync()
 			return srv.Shutdown(ctx)
 		},
 	})

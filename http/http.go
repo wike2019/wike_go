@@ -75,6 +75,12 @@ func (this *GCore) NewHTTPServer(ControllerList []Controller, lc fx.Lifecycle, z
 			//清理资源
 			close(bloom.Clear)
 			Default.Stop()
+			for _, item := range this.StopRun {
+				err := item()
+				if err != nil {
+					zap.Error(fmt.Sprintf("stop func is error: %s\n", err))
+				}
+			}
 			return srv.Shutdown(ctx)
 		},
 	})

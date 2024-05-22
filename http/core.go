@@ -17,6 +17,7 @@ type GCore struct {
 	globalMiddleware []gin.HandlerFunc
 	CronFunc         []map[string]func()
 	RoleCtl          *casbinInit.RoleCtl
+	StopRun          []func() error
 }
 
 const IRoutes = "routes"
@@ -31,6 +32,7 @@ func God() *GCore {
 		invokes:          make([]interface{}, 0),
 		globalMiddleware: make([]gin.HandlerFunc, 0),
 		CronFunc:         make([]map[string]func(), 0),
+		StopRun:          make([]func() error, 0),
 	}
 }
 func (this *GCore) Run() {

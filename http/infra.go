@@ -82,3 +82,7 @@ func (this *GCore) Cron(spec string, cmd func()) *GCore {
 	this.CronFunc = append(this.CronFunc, map[string]func(){spec: cmd})
 	return this
 }
+func (this *GCore) Stop(job func() error) *GCore {
+	this.StopRun = append(this.StopRun, job)
+	return this
+}

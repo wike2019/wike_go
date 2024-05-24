@@ -14,6 +14,16 @@ import (
 	"time"
 )
 
+func Reject(god *GCore) gin.HandlerFunc {
+	return func(context *gin.Context) {
+		if god.Reject {
+			context.AbortWithStatusJSON(http.StatusServiceUnavailable, gin.H{"message": "服务暂时关闭", "code": 503})
+			return
+		}
+		context.Next()
+	}
+}
+
 func AddTrace() gin.HandlerFunc {
 	return func(context *gin.Context) {
 		traceId := ""

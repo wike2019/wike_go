@@ -18,6 +18,7 @@ type GCore struct {
 	CronFunc         []map[string]func()
 	RoleCtl          *casbinInit.RoleCtl
 	StopRun          []func() error
+	Reject           bool
 }
 
 const IRoutes = "routes"

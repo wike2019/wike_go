@@ -21,8 +21,9 @@ import (
 func (this *GCore) NewHTTPServer(ControllerList []Controller, lc fx.Lifecycle, zap *zap.Logger, cfg *viper.Viper, rateLimiterCache *rateLimiter.RateLimiterCache, Default *cron.Cron, RoleCtl *casbinInit.RoleCtl) *http.Server {
 	this.RoleCtl = RoleCtl
 	r := gin.New()
-	this.gin = r                                          //缓存gin
-	r.Use(ginGzip.Gzip(gzip.DefaultCompression))          //开启压缩
+	this.gin = r                                 //缓存gin
+	r.Use(ginGzip.Gzip(gzip.DefaultCompression)) //开启压缩
+	r.Use(Reject(this))
 	r.Use(AddTrace(), CustomRecover(zap))                 //添加recover中间件和traceId中间件
 	r.Use(AccessLog(zap), CORSMiddleware())               //添加日志中间件 和 跨域中间件
 	r.Use(LimitBodySize(32 << 20))                        //添加body数据长度限制中间件
@@ -73,8 +74,10 @@ func (this *GCore) NewHTTPServer(ControllerList []Controller, lc fx.Lifecycle, z
 		},
 		OnStop: func(ctx context.Context) error {
 			//清理资源
+			this.Reject = true
 			close(bloom.Clear)
 			Default.Stop()
+			srv.Shutdown(ctx)
 			for _, job := range this.StopRun {
 				err := job()
 				if err != nil {
@@ -82,7 +85,7 @@ func (this *GCore) NewHTTPServer(ControllerList []Controller, lc fx.Lifecycle, z
 				}
 			}
 			zap.Sync()
-			return srv.Shutdown(ctx)
+			return nil
 		},
 	})
 	return srv

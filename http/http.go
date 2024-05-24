@@ -16,6 +16,7 @@ import (
 	"go.uber.org/zap"
 	"net"
 	"net/http"
+	"time"
 )
 
 func (this *GCore) NewHTTPServer(ControllerList []Controller, lc fx.Lifecycle, zap *zap.Logger, cfg *viper.Viper, rateLimiterCache *rateLimiter.RateLimiterCache, Default *cron.Cron, RoleCtl *casbinInit.RoleCtl) *http.Server {
@@ -75,6 +76,7 @@ func (this *GCore) NewHTTPServer(ControllerList []Controller, lc fx.Lifecycle, z
 		OnStop: func(ctx context.Context) error {
 			//清理资源
 			this.Reject = true
+			time.Sleep(3 * time.Second)
 			close(bloom.Clear)
 			Default.Stop()
 			srv.Shutdown(ctx)

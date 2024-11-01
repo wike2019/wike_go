@@ -1,0 +1,9 @@
+port: 9999
+development: true
+mysql: "root:QAZwsx123123...@tcp(139.198.162.83:7775)/kf_vue?charset=utf8mb4&parseTime=True&loc=Local"
+redis: "127.0.0.1:6379"
+logPath: "./logs/app.log"
+text: "仅限于奇荃网络相关问题处理使用，他用无效。"
+LRULimit: 4096
+LimitRate: 128
+LimitBucket: 512

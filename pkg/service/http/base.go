@@ -172,13 +172,13 @@ func (p *Page) FormatTotal(total int64) {
 
 type Controller struct {
 	PageTime
-	ctx *gin.Context
+	*gin.Context
 }
 
 func (r *Controller) SetContext(ctx *gin.Context) *Controller {
 
 	clone := new(Controller)
-	clone.ctx = ctx
+	clone.Context = ctx
 	ctx.ShouldBindBodyWith(clone, binding.JSON)
 	if clone.CurPage == 0 {
 		clone.CurPage = 1
@@ -190,14 +190,14 @@ func (r *Controller) SetContext(ctx *gin.Context) *Controller {
 	return clone
 }
 func (r *Controller) ShouldBindJson(v interface{}) error {
-	return r.ctx.ShouldBindBodyWith(v, binding.JSON)
+	return r.ShouldBindBodyWith(v, binding.JSON)
 }
 func (r *Controller) Success(msg string, data interface{}) {
-	r.ctx.JSON(http.StatusOK, gin.H{
+	r.JSON(http.StatusOK, gin.H{
 		"code":     Success,
 		"msg":      msg,
 		"data":     data,
-		"trace_id": r.ctx.GetString("trace_id"),
+		"trace_id": r.GetString("trace_id"),
 	})
 }
 func (r *Controller) List(msg string, list interface{}) {
@@ -217,14 +217,14 @@ func (r *Controller) List(msg string, list interface{}) {
 func (r *Controller) Failed(code errorCode, msg string) {
 	errMsg := codeMsg[code] + ": " + msg
 	if code != Success {
-		r.ctx.Set("error_code", int(code))
-		r.ctx.Set("error_msg", msg)
+		r.Set("error_code", int(code))
+		r.Set("error_msg", msg)
 	}
-	r.ctx.AbortWithStatusJSON(http.StatusOK, gin.H{
+	r.AbortWithStatusJSON(http.StatusOK, gin.H{
 		"code":     code,
 		"msg":      errMsg,
 		"data":     nil,
-		"trace_id": r.ctx.GetString("trace_id"),
+		"trace_id": r.GetString("trace_id"),
 	})
 }
 

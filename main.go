@@ -55,5 +55,7 @@ func main() {
 		return nil
 	})
 	g.Default().GlobalUse(core.CORSMiddleware()) //选择redis作为缓存服务的存储
-	g.Provide(MyViper).MountWithEmpty(NewRouter).Run()
+	g.Provide(MyViper).MountWithEmpty(NewRouter).Invokes(func(r *router) {
+		go r.job() //这里不能阻塞 所以最好用 go xxx
+	}).Run()
 }

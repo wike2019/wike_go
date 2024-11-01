@@ -1,3 +1,4 @@
 ./logs/
 ./main.go
 ./config.yaml
+./viper.go

@@ -53,6 +53,7 @@ func (this *GCore) Run() {
 		fx.Provide(this.provides...),   //注册 provides
 		fx.Invoke(this.invokes...),     //注册 invokes
 		fx.Provide(this.Controller...), //注册 路由
+		fx.Supply(this),
 	)
 	this.app.Run() //启动app
 }

@@ -13,7 +13,16 @@ import (
 type router struct {
 	controller.Controller
 }
+type Invoke struct {
+}
 
+func NewInvoke() *Invoke {
+	return &Invoke{}
+}
+func (this *Invoke) job() error {
+	fmt.Println(time.Now().String())
+	return nil
+}
 func NewRouter() *router {
 	return &router{}
 }
@@ -54,8 +63,9 @@ func main() {
 		fmt.Println("这里做全局清理")
 		return nil
 	})
+
 	g.Default().GlobalUse(core.CORSMiddleware()) //选择redis作为缓存服务的存储
-	g.Provide(MyViper).MountWithEmpty(NewRouter).Invokes(func(r *router) {
+	g.Provide(MyViper).Provide(NewInvoke).MountWithEmpty(NewRouter).Invokes(func(r *Invoke) {
 		go r.job() //这里不能阻塞 所以最好用 go xxx
 	}).Run()
 }

@@ -1,12 +1,15 @@
 package main
 
 import (
+	"fmt"
 	"github.com/spf13/viper"
+	"github.com/wike2019/wike_go/pkg/core"
 	"log"
 )
 
 // 配置中心
-func MyViper() *viper.Viper {
+func MyViper(core *core.GCore) *viper.Viper {
+	//fmt.Println(core)
 	viper.SetDefault("port", "8888")
 	viper.SetDefault("logPath", "./logs/app.log")
 	viper.SetDefault("development", true)
@@ -20,5 +23,9 @@ func MyViper() *viper.Viper {
 	}
 	//业务参数
 	viper.SetDefault("Timeout", 3000)
+	core.Stop(func() error {
+		fmt.Println("这里是viper清理")
+		return nil
+	})
 	return viper.GetViper()
 }

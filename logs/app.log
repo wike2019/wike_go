@@ -240,3 +240,9 @@
 2024-11-01T11:13:31.151+0800	info	core/middleware.go:73	接口访问日志	{"path": "/healthz", "method": "GET", "http_host": "127.0.0.1:9999", "ua": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/129.0.0.0 Safari/537.36", "remote_addr": "127.0.0.1:63345", "request_body_size": 0, "status_code": 200, "error_code": 0, "error_msg": "", "client_ip": "127.0.0.1", "latency": 0.000401826}
 2024-11-01T11:30:46.637+0800	debug	core/http.go:54	Starting HTTP server at :9999
 2024-11-01T11:30:58.725+0800	debug	core/http.go:54	Starting HTTP server at :9999
+2024-11-01T16:52:29.117+0800	debug	core/http.go:54	Starting HTTP server at :9999
+2024-11-01T16:54:04.151+0800	debug	core/http.go:54	Starting HTTP server at :9999
+2024-11-01T16:59:25.881+0800	debug	core/http.go:54	Starting HTTP server at :9999
+2024-11-01T17:00:08.245+0800	debug	core/http.go:54	Starting HTTP server at :9999
+2024-11-01T17:01:02.080+0800	debug	core/http.go:54	Starting HTTP server at :9999
+2024-11-01T17:01:07.243+0800	debug	core/http.go:54	Starting HTTP server at :9999

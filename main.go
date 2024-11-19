@@ -1,6 +1,7 @@
 package main
 
 import (
+	"errors"
 	"fmt"
 	"github.com/wike2019/wike_go/pkg/modules/ants_service"
 	"time"
@@ -56,10 +57,13 @@ type Job struct {
 	i2 int
 }
 
-func (this *Job) Job() {
-
+func (this *Job) Job() error {
+	if this.i2 == 3 {
+		return errors.New("错误")
+	}
 	time.Sleep(time.Duration(this.i2) * time.Second)
 	fmt.Println("time: ", this.i2, time.Now().Format("2006-01-02 15:04:05"))
+	return nil
 }
 func main() {
 
@@ -80,6 +84,7 @@ func main() {
 
 	fmt.Println("finish-1")
 	pool.Wait() // 等待所有任务完成
+	fmt.Println(pool.Ok, pool.Fail, pool.Error())
 	fmt.Println("finish")
 	return
 

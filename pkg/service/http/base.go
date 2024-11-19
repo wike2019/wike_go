@@ -233,8 +233,8 @@ type StatusError struct {
 	Code int    `json:"code"`
 }
 
-func Error(err error) {
+func Error(err error, code int) {
 	if err != nil {
-		panic(StatusError{Msg: err.Error(), Code: 400})
+		panic(StatusError{Msg: err.Error(), Code: code})
 	}
 }

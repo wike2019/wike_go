@@ -14,12 +14,15 @@ import (
 	"go.uber.org/zap"
 	"net"
 	"net/http"
+	"os"
+	"text/template"
 	"time"
 )
 
-func (this *GCore) NewHTTPServer(ControllerList []Controller, lc fx.Lifecycle, zap *zap.Logger, cfg *viper.Viper, DefaultCron *cronInit.DefaultCron, RoleCtl *casbinInit.RoleCtl) *http.Server {
+func (this *GCore) NewHTTPServer(ControllerList []Controller, db *CoreDb, lc fx.Lifecycle, zap *zap.Logger, cfg *viper.Viper, DefaultCron *cronInit.DefaultCron, RoleCtl *casbinInit.RoleCtl) *http.Server {
 	this.RoleCtl = RoleCtl
 	this.zap = zap
+	this.db = db
 	this.cfg = cfg
 	r := gin.New()
 	this.gin = r                           //缓存gin
@@ -66,6 +69,26 @@ func (this *GCore) NewHTTPServer(ControllerList []Controller, lc fx.Lifecycle, z
 			go func() {
 				DefaultCron.Start()
 			}()
+
+			tmpl, err := template.New("markdown").Parse(mdTemplate)
+			if err != nil {
+				panic(err)
+			}
+
+			// 创建 Markdown 文件
+			file, err := os.Create("接口文档.md")
+			if err != nil {
+				panic(err)
+			}
+
+			// 渲染模板到文件
+			err = tmpl.Execute(file, this.db.GetData())
+			if err != nil {
+				panic(err)
+			}
+
+			file.Close()
+
 			return nil
 		},
 		OnStop: func(ctx context.Context) error {
@@ -101,19 +124,23 @@ func (this *GCore) Default() *GCore {
 }
 
 // 权限注册函数
-func (this *GCore) GetWithRbac(r *gin.RouterGroup, role string, path string, handler gin.HandlerFunc) {
-	this.RoleCtl.AddRule(role, r.BasePath(), path, http.MethodGet)
+func (this *GCore) GetWithRbac(r *gin.RouterGroup, group Controller, path string, handler gin.HandlerFunc, name string) {
+	query, body, header, output := group.GetInnerData()
+	this.db.ApiTable(name, group.Name(), Input(query, body, header), Output(output), group.Path()+path, http.MethodGet)
 	r.GET(path, handler)
 }
-func (this *GCore) PostWithRbac(r *gin.RouterGroup, role string, path string, handler gin.HandlerFunc) {
-	this.RoleCtl.AddRule(role, r.BasePath(), path, http.MethodPost)
+func (this *GCore) PostWithRbac(r *gin.RouterGroup, group Controller, path string, handler gin.HandlerFunc, name string) {
+	query, body, header, output := group.GetInnerData()
+	this.db.ApiTable(name, group.Name(), Input(query, body, header), Output(output), group.Path()+path, http.MethodPost)
 	r.POST(path, handler)
 }
-func (this *GCore) DelWithRbac(r *gin.RouterGroup, role string, path string, handler gin.HandlerFunc) {
-	this.RoleCtl.AddRule(role, r.BasePath(), path, http.MethodDelete)
+func (this *GCore) DelWithRbac(r *gin.RouterGroup, group Controller, path string, handler gin.HandlerFunc, name string) {
+	query, body, header, output := group.GetInnerData()
+	this.db.ApiTable(name, group.Name(), Input(query, body, header), Output(output), group.Path()+path, http.MethodDelete)
 	r.DELETE(path, handler)
 }
-func (this *GCore) PutWithRbac(r *gin.RouterGroup, role string, path string, handler gin.HandlerFunc) {
-	this.RoleCtl.AddRule(role, r.BasePath(), path, http.MethodPut)
+func (this *GCore) PutWithRbac(r *gin.RouterGroup, group Controller, path string, handler gin.HandlerFunc, name string) {
+	query, body, header, output := group.GetInnerData()
+	this.db.ApiTable(name, group.Name(), Input(query, body, header), Output(output), group.Path()+path, http.MethodPut)
 	r.PUT(path, handler)
 }

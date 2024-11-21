@@ -129,21 +129,21 @@ type Page struct {
 
 type Pagination struct {
 	List interface{} `json:"list"`
-	Page
+	Page Page
 }
 
 func (this *Pagination) Reset() {
 	this.List = nil
-	this.SumPage = 0
-	this.SumCount = 0
-	this.CurPage = 0
-	this.Offset = 0
-	this.Count = 0
+	this.Page.SumPage = 0
+	this.Page.SumCount = 0
+	this.Page.CurPage = 0
+	this.Page.Offset = 0
+	this.Page.Count = 0
 }
 
 // PageTime 适用 列表-分页-时间范围
 type PageTime struct {
-	Page
+	Page      Page
 	StartTime int64 `json:"startTime" form:"startTime"` // 开始时间
 	EndTime   int64 `json:"endTime" form:"endTime"`     // 结束时间
 }
@@ -173,20 +173,40 @@ func (p *Page) FormatTotal(total int64) {
 type Controller struct {
 	PageTime
 	*gin.Context
+	query  interface{}
+	body   interface{}
+	header interface{}
+	output interface{}
 }
 
+func (r *Controller) clear() {
+	r.query = nil
+	r.body = nil
+	r.header = nil
+	r.output = nil
+}
+func (r *Controller) SetDoc(query interface{}, body interface{}, header interface{}, output interface{}) {
+	r.clear()
+	r.query = query
+	r.body = body
+	r.header = header
+	r.output = output
+}
+func (r *Controller) GetInnerData() (interface{}, interface{}, interface{}, interface{}) {
+	return r.query, r.body, r.header, r.output
+}
 func (r *Controller) SetContext(ctx *gin.Context) *Controller {
 
 	clone := new(Controller)
 	clone.Context = ctx
 	ctx.ShouldBindBodyWith(clone, binding.JSON)
-	if clone.CurPage == 0 {
-		clone.CurPage = 1
+	if clone.Page.CurPage == 0 {
+		clone.Page.CurPage = 1
 	}
-	if clone.Count == 0 {
-		clone.Count = 10
+	if clone.Page.Count == 0 {
+		clone.Page.Count = 10
 	}
-	clone.Offset = (clone.CurPage - 1) * clone.Count
+	clone.Page.Offset = (clone.Page.CurPage - 1) * clone.Page.Count
 	return clone
 }
 func (r *Controller) ShouldBindJson(v interface{}) error {
@@ -237,4 +257,26 @@ func Error(err error, code int) {
 	if err != nil {
 		panic(StatusError{Msg: err.Error(), Code: code})
 	}
+}
+
+type PageDocList[T any] struct {
+	List T `json:"list"`
+	Page Page
+}
+type HttpReturn struct {
+	Code    errorCode   `json:"code"`
+	Msg     string      `json:"msg"`
+	Data    interface{} `json:"data"`
+	TraceId string      `json:"trace_id"`
+}
+
+type HttpDoc[T any] struct {
+	Code    errorCode `json:"code"`
+	Msg     string    `json:"msg"`
+	Data    T         `json:"data"`
+	TraceId string    `json:"trace_id"`
+}
+
+func PageDoc[T any]() HttpDoc[PageDocList[T]] {
+	return HttpDoc[PageDocList[T]]{}
 }

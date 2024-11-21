@@ -14,6 +14,7 @@ var Module = fx.Module("infra",
 	fx.Provide(zaplog.GetLogger), //默认日志
 	fx.Provide(cronInit.NewDefaultCron, casbinInit.NewEnforcer, casbinInit.NewCtl), //定时器任务 rbac权限
 	fx.Invoke(func(*http.Server) {}),
+	fx.Provide(InitDb),
 )
 
 // 用于没有参数的依赖注入

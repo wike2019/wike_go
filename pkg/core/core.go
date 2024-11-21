@@ -22,6 +22,7 @@ type GCore struct {
 	Reject           bool
 	zap              *zap.Logger
 	cfg              *viper.Viper
+	db               *CoreDb
 }
 
 const IRoutes = "routes"

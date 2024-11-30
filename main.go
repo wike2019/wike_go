@@ -39,6 +39,7 @@ func (this *Invoke) job() error {
 func NewRouter() *router {
 	return &router{}
 }
+
 func (this *router) healtzh(context *gin.Context) {
 	c := this.SetContext(context)
 	c.Success("修改成功", nil)

@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"gorm.io/driver/sqlite"
 	"gorm.io/gorm"
-	"os"
 	"reflect"
 	"strings"
 )
@@ -14,7 +13,6 @@ type CoreDb struct {
 }
 
 func InitDb() *CoreDb {
-	os.RemoveAll("core.db")
 	dbsqlite, err := gorm.Open(sqlite.Open("core.db"), &gorm.Config{})
 	if err != nil {
 		panic("failed to connect database")
@@ -23,6 +21,7 @@ func InitDb() *CoreDb {
 	if err != nil {
 		panic("failed to migrate database")
 	}
+	dbsqlite.Model(API{}).Where("1=1").Delete(nil)
 	return &CoreDb{
 		DB: dbsqlite,
 	}

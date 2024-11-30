@@ -120,11 +120,11 @@ func (t LocalTime) MarshalJSON() ([]byte, error) {
 }
 
 type Page struct {
-	SumPage  int `json:"sumPage" swaggerignore:"true"`  // 总页数
-	SumCount int `json:"sumCount" swaggerignore:"true"` // 总条数
-	CurPage  int `json:"page" form:"page"`              // 当前页
-	Offset   int `json:"-"`                             // 起始量
-	Count    int `json:"count" form:"count"`            // 每页返回数量
+	SumPage  int `json:"sumPage" swaggerignore:"true" desc:"总页数"`  // 总页数
+	SumCount int `json:"sumCount" swaggerignore:"true" desc:"总条数"` // 总条数
+	CurPage  int `json:"page" form:"page" desc:"当前页"   `           // 当前页
+	Offset   int `json:"-"`                                        // 起始量
+	Count    int `json:"count" form:"count" desc:"每页返回数量"`         // 每页返回数量
 }
 
 type Pagination struct {
@@ -274,7 +274,7 @@ type HttpDoc[T any] struct {
 	Code    errorCode `json:"code"`
 	Msg     string    `json:"msg"`
 	Data    T         `json:"data"`
-	TraceId string    `json:"trace_id"`
+	TraceId string    `json:"trace_id" desc:"追踪id"`
 }
 
 func PageDoc[T any]() HttpDoc[PageDocList[T]] {

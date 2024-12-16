@@ -2,6 +2,7 @@ package core
 
 import (
 	"fmt"
+	"github.com/wike2019/wike_go/model"
 	"gorm.io/driver/sqlite"
 	"gorm.io/gorm"
 	"reflect"
@@ -17,11 +18,11 @@ func InitDb() *CoreDb {
 	if err != nil {
 		panic("failed to connect database")
 	}
-	err = dbsqlite.AutoMigrate(&API{})
+	err = dbsqlite.AutoMigrate(&model.API{}, &model.SysDictionary{}, &model.SysDictionaryDetail{})
 	if err != nil {
 		panic("failed to migrate database")
 	}
-	dbsqlite.Model(API{}).Where("1=1").Delete(nil)
+	dbsqlite.Model(model.API{}).Where("1=1").Update("status", 2)
 	return &CoreDb{
 		DB: dbsqlite,
 	}
@@ -29,41 +30,56 @@ func InitDb() *CoreDb {
 
 func Input(query interface{}, body interface{}, header interface{}) string {
 	str := ""
-	str += generateStructTable(query, 2, 1)
+	str += generateStructTable(query, 2, 1, false, true)
 	str += "---\n"
-	str += generateStructTable(body, 1, 1)
+	str += generateStructTable(body, 1, 1, false, true)
 	str += "---\n"
-	str += generateStructTable(header, 3, 1)
+	str += generateStructTable(header, 3, 1, false, true)
 	str += "---\n"
 	return str
 }
 func Output(body interface{}) string {
-	return generateStructTable(body, 1, 1) + "---\n"
+	return generateStructTable(body, 1, 1, false, false) + "---\n"
 }
 func (this *CoreDb) ApiTable(name string, group string, input string, output string, path string, method string) *CoreDb {
-	res := &API{
+	res := &model.API{
 		Name:   name,
 		Group:  group,
 		Input:  input,
 		Output: output,
 		Path:   path,
 		Method: method,
+		Status: 1,
 	}
-	this.DB.Create(res)
+	historyApi := &model.API{}
+	err := this.DB.Where("method=? and path=?", method, path).First(historyApi).Error
+	if err != nil {
+		this.DB.Create(res)
+	} else {
+		historyApi.Input = input
+		historyApi.Output = output
+		historyApi.Name = name
+		historyApi.Group = group
+		historyApi.Status = 1
+		this.DB.Save(historyApi)
+	}
+
 	return this
 }
-
-func generateStructTable(data interface{}, dataType int, level int) string {
+func generateStructTable(data interface{}, dataType int, level int, Anonymous bool, short bool) string {
 	if data == nil {
 		return ""
 	}
+
 	t := reflect.TypeOf(data)
 	v := reflect.ValueOf(data)
 
 	// 如果是指针，解引用
 	if t.Kind() == reflect.Ptr {
 		t = t.Elem()
-		v = v.Elem()
+		if v.IsValid() && !v.IsNil() {
+			v = v.Elem()
+		}
 	}
 
 	// 如果不是结构体，返回空
@@ -72,57 +88,144 @@ func generateStructTable(data interface{}, dataType int, level int) string {
 	}
 
 	md := strings.Builder{}
-
-	md.WriteString(fmt.Sprintf("%s### %s\n\n", strings.Repeat("#", level), t.Name()))
-
-	defaultData := "字段名 | 类型 | 标签 (json) | 描述 | 是否必填 |\n"
-	if dataType == 2 {
-		defaultData = "字段名 | 类型 | 标签 (form) | 描述 | 是否必填 |\n"
+	if !Anonymous {
+		// 添加标题
+		md.WriteString(fmt.Sprintf("%s### %s\n\n", strings.Repeat("#", level), t.Name()))
 	}
-	if dataType == 3 {
-		defaultData = "字段名 | 类型 | 标签 (header) | 描述 | 是否必填 |\n"
+	// 根据 dataType 确定标签名称
+	defaultData := "| 字段名 | 类型 | 标签 (json) | 描述 | 是否必填 | 是否搜索 |\n"
+	switch dataType {
+	case 2:
+		defaultData = "| 字段名 | 类型 | 标签 (form) | 描述 | 是否必填 | 是否搜索 |\n"
+	case 3:
+		defaultData = "| 字段名 | 类型 | 标签 (header) | 描述 | 是否必填 | 是否搜索 |\n"
 	}
-	// 表格标题
-	md.WriteString(defaultData)
-	md.WriteString("|--------|------|------------|------|------|\n")
+	defaultDataLine := "|--------|------|------------|------|------|------|\n"
+	if short == false {
+		defaultData = "| 字段名 | 类型 | 标签 (json) | 描述  | \n"
+		defaultDataLine = "|--------|------|------------|------| \n"
+	}
+	if !Anonymous {
+		// 表格标题
+		md.WriteString(defaultData)
+		md.WriteString(defaultDataLine)
+	}
 
-	// 遍历字段
+	// 遍历结构体字段
 	for i := 0; i < t.NumField(); i++ {
 		field := t.Field(i)
 		fieldValue := v.Field(i)
-		name := field.Name
-		fieldType := field.Type.Name()
-		Tag := field.Tag.Get("json")
-		if dataType == 2 {
-			Tag = field.Tag.Get("form")
+
+		// 如果是匿名字段，将其字段展开到当前结构体
+		if field.Anonymous {
+			// 如果匿名字段是指针，需要解引用
+			if fieldValue.Kind() == reflect.Ptr && !fieldValue.IsNil() {
+				md.WriteString(generateStructTable(fieldValue.Elem().Interface(), dataType, level+1, field.Anonymous, short))
+			} else if fieldValue.Kind() == reflect.Struct {
+				md.WriteString(generateStructTable(fieldValue.Interface(), dataType, level+1, field.Anonymous, short))
+			}
+			continue
 		}
-		if dataType == 3 {
-			Tag = field.Tag.Get("header")
+
+		// 获取字段信息
+		name := field.Name
+		fieldType := field.Type.String()
+		tag := field.Tag.Get("json")
+		if dataType == 2 {
+			tag = field.Tag.Get("form")
+		} else if dataType == 3 {
+			tag = field.Tag.Get("header")
 		}
 		description := field.Tag.Get("desc")
-		need := field.Tag.Get("required")
-		require := ""
-		if need == "true" {
+		if description == "" {
+			description = field.Tag.Get("comment") // 支持 `comment` 标签
+		}
+		required := field.Tag.Get("required")
+		require := "否"
+		if required == "true" {
 			require = "是"
 		}
-
-		md.WriteString(fmt.Sprintf("| %s | %s | %s | %s | %s |\n", name, fieldType, Tag, description, require))
-
-		if fieldValue.Kind() == reflect.Struct {
-			md.WriteString(generateStructTable(fieldValue.Interface(), dataType, level+1))
-		} else if fieldValue.Kind() == reflect.Slice && fieldValue.Len() > 0 {
-			// 获取切片的第一个元素类型
-			element := fieldValue.Index(0).Interface()
-			md.WriteString(generateStructTable(element, dataType, level+1))
+		search := "否"
+		searched := field.Tag.Get("search")
+		if searched != "" {
+			search = "是"
+		}
+		if short == false {
+			//panic(fmt.Sprintf("| %s | %s | %s | %s ｜ \n", name, fieldType, tag, description))
+			md.WriteString(fmt.Sprintf("| %s | %s | %s |  %s  | \n", name, fieldType, tag, description))
+		} else {
+			// 添加字段到表格
+			md.WriteString(fmt.Sprintf("| %s | %s | %s | %s | %s | %s | \n", name, fieldType, tag, description, require, search))
+		}
+		// 检查是否是标准库类型，如果是则跳过递归
+		if isStandardLibraryType(field.Type) {
+			continue
 		}
 
+		// 如果字段是嵌套结构体，递归处理
+		if fieldValue.Kind() == reflect.Struct {
+			md.WriteString(generateStructTable(fieldValue.Interface(), dataType, level+1, field.Anonymous, short))
+		} else if fieldValue.Kind() == reflect.Slice {
+			// 如果是切片，递归处理第一个元素
+			elementType := field.Type.Elem() // 获取切片的元素类型
+			if fieldValue.Len() > 0 {
+				element := fieldValue.Index(0).Interface()
+				if short == false {
+					md.WriteString(fmt.Sprintf("| %s | []%s | %s | %s ｜ \n", name, elementType.Name(), tag, description))
+				} else {
+					// 添加字段到表格
+					md.WriteString(fmt.Sprintf("| %s | []%s | %s | %s | %s | %s | \n", name, elementType.Name(), tag, description, require, search))
+				}
+				md.WriteString(generateStructTable(element, dataType, level+1, field.Anonymous, short))
+			} else {
+				// 如果切片为空，递归生成切片元素类型
+				emptyElement := reflect.New(elementType).Elem().Interface()
+				md.WriteString(generateStructTable(emptyElement, dataType, level+1, field.Anonymous, short))
+			}
+			continue
+
+		} else if fieldValue.Kind() == reflect.Ptr {
+			// 如果是指针类型，解引用后递归处理
+			if !fieldValue.IsNil() {
+				md.WriteString(generateStructTable(fieldValue.Elem().Interface(), dataType, level+1, field.Anonymous, short))
+			} else {
+				if short == false {
+					md.WriteString(fmt.Sprintf("| %s | %s | 空指针 | - ｜ \n", name, fieldType))
+				} else {
+					// 添加字段到表格
+					md.WriteString(fmt.Sprintf("| %s | %s | - | 空指针 | - |\n", name, fieldType))
+				}
+			}
+		}
 	}
 
 	return md.String()
 }
+func isStandardLibraryType(t reflect.Type) bool {
+	// 如果类型是 nil，直接返回 false
+	if t == nil {
+		return false
+	}
+	if t == reflect.TypeOf(gorm.DeletedAt{}) {
+		return true
+	}
+	// 对切片类型的元素类型检查
+	if t.Kind() == reflect.Slice {
+		t = t.Elem()
+	}
 
+	// 获取包路径
+	pkgPath := t.PkgPath()
+
+	// Go 标准库的类型通常在 "" 或 "time" 等包路径中
+	if pkgPath == "" || pkgPath == "time" {
+		return true
+	}
+
+	return false
+}
 func (this *CoreDb) GetData() map[string]APIGroup {
-	var list []API
+	var list []model.API
 	this.DB.Find(&list)
 
 	rs := make(map[string]APIGroup)
@@ -134,7 +237,7 @@ func (this *CoreDb) GetData() map[string]APIGroup {
 			// 如果分组不存在，初始化
 			group = APIGroup{
 				Group: item.Group,
-				APIs:  make([]API, 0),
+				APIs:  make([]model.API, 0),
 			}
 		}
 

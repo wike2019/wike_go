@@ -6,7 +6,7 @@ import (
 	"github.com/gin-contrib/timeout"
 	"github.com/gin-gonic/gin"
 	"github.com/google/uuid"
-	controller "github.com/wike2019/wike_go/pkg/service/http"
+	controller "github.com/wike2019/wike_go/pkg/service/ctl"
 	"github.com/wike2019/wike_go/pkg/service/rateLimiter"
 	"go.uber.org/zap"
 	"golang.org/x/time/rate"
@@ -114,7 +114,7 @@ func CustomRecover(god *GCore) gin.HandlerFunc {
 					c.AbortWithStatusJSON(check.Code, gin.H{"message": check.Msg, "code": check.Code, "trace_id": c.GetString("trace_id")})
 					return
 				}
-				god.zap.Error("接口错误", zap.String("path", c.Request.URL.Path))
+				god.zap.Error("接口错误", zap.String("path", c.Request.URL.Path), zap.String("error", err.(error).Error()))
 				c.AbortWithStatusJSON(500, gin.H{"message": "Internal Server Error", "code": 500, "trace_id": c.GetString("trace_id")})
 				return
 			}

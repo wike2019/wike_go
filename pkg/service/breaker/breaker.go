@@ -23,3 +23,8 @@ func NewCircuitBreaker(name string, MaxRequests uint32, Interval time.Duration, 
 func NewCircuitBreakerWithSettings(settings gobreaker.Settings) *gobreaker.CircuitBreaker {
 	return gobreaker.NewCircuitBreaker(settings)
 }
+
+/*
+demo
+this.Breaker.Execute(this.Job)
+**/

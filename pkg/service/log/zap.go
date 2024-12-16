@@ -36,7 +36,7 @@ func GetLogger(*viper.Viper) *zap.Logger {
 		// 创建一个写入文件的 zapcore.Core
 		fileSyncWriter := zapcore.AddSync(&lumberjack.Logger{
 			Filename:   viper.GetString("logPath"),
-			MaxSize:    500,
+			MaxSize:    100,
 			MaxBackups: 3,
 			MaxAge:     7,
 			Compress:   true,

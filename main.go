@@ -5,8 +5,9 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/spf13/viper"
 	"github.com/wike2019/wike_go/pkg/core"
-	controller "github.com/wike2019/wike_go/pkg/service/http"
+	controller "github.com/wike2019/wike_go/pkg/service/ctl"
 	"github.com/wike2019/wike_go/pkg/service/memorylog"
+	"github.com/wike2019/wike_go/serve"
 	"log"
 	"time"
 )
@@ -61,35 +62,54 @@ func (this *router) stop() error {
 }
 
 type Game struct {
-	ID    uint64 `gorm:"primaryKey;column:id;comment:主键" json:"id"`
-	Game  string `gorm:"column:game;type:varchar(255);comment:游戏" json:"game"`
-	Type  string `gorm:"column:type;type:varchar(255);comment:分类" json:"type"`
-	Order int    `gorm:"column:order;type:int;comment:排序" json:"order"`
-	Show  int    `gorm:"column:show;type:int;comment:冗余字段" json:"show"` //当初用来区分不同账号登入，显示游戏的，后来没用到
+	TestAge
+	TestAge2
+	ID        uint64 `gorm:"primaryKey;column:id;comment:主键" json:"id"`
+	Game      string `gorm:"column:game;type:varchar(255);comment:游戏" json:"game"`
+	Type      string `gorm:"column:type;type:varchar(255);comment:分类" json:"type"`
+	Order     int    `gorm:"column:order;type:int;comment:排序" json:"order"`
+	Show      int    `gorm:"column:show;type:int;comment:冗余字段" json:"show"` //当初用来区分不同账号登入，显示游戏的，后来没用到
+	TestAge25 TestAge25
+}
+type TestAge struct {
+	Name string `json:"name"`
+}
+
+type TestAge2 struct {
+	Age string `json:"age"`
+}
+
+type TestAge25 struct {
+	Name2     string `json:"name"`
+	TestAge34 TestAge34
+}
+
+type TestAge34 struct {
+	Age3 string `json:"age"`
 }
 
 func (this *router) Build(r *gin.RouterGroup, GCore *core.GCore) {
 	GCore.Stop(this.stop)
 	this.SetDoc(Query{}, Body{}, Header{}, controller.PageDoc[Game]())
-	GCore.GetWithRbac(r, this, "healthz1", this.healtzh, "游戏列表1")
+	GCore.GetWithRbac(r, this, "游戏", "healthz1", this.healtzh, "游戏列表1")
 	this.SetDoc(Query{}, nil, Header{}, controller.PageDoc[Game]())
-	GCore.GetWithRbac(r, this, "healthz2", this.healtzh, "游戏列表2")
+	GCore.GetWithRbac(r, this, "游戏", "healthz2", this.healtzh, "游戏列表2")
 	this.SetDoc(Query{}, nil, nil, controller.PageDoc[Game]())
-	GCore.GetWithRbac(r, this, "healthz3", this.healtzh, "游戏列表3")
+	GCore.GetWithRbac(r, this, "游戏", "healthz3", this.healtzh, "游戏列表3")
 	this.SetDoc(nil, nil, nil, controller.PageDoc[Game]())
-	GCore.GetWithRbac(r, this, "healthz4", this.healtzh, "游戏列表4")
+	GCore.GetWithRbac(r, this, "游戏2", "healthz4", this.healtzh, "游戏列表4")
 	this.SetDoc(Query{}, Body{}, Header{}, nil)
-	GCore.GetWithRbac(r, this, "healthz5", this.healtzh, "游戏列表5")
+	GCore.GetWithRbac(r, this, "游戏2", "healthz5", this.healtzh, "游戏列表5")
 	this.SetDoc(Query{}, nil, Header{}, controller.PageDoc[Game]())
-	GCore.GetWithRbac(r, this, "healthz6", this.healtzh, "游戏列表6")
+	GCore.GetWithRbac(r, this, "游戏2", "healthz6", this.healtzh, "游戏列表6")
 	this.SetDoc(nil, nil, nil, nil)
-	GCore.GetWithRbac(r, this, "healthz7", this.healtzh, "游戏列表7")
+	GCore.GetWithRbac(r, this, "游戏", "healthz7", this.healtzh, "游戏列表7")
 
 	this.SetDoc(nil, nil, nil, controller.HttpDoc[Game]{})
-	GCore.GetWithRbac(r, this, "healthz8", this.healtzh, "游戏列表8")
+	GCore.GetWithRbac(r, this, "游戏", "healthz8", this.healtzh, "游戏列表8")
 
-	this.SetDoc(nil, Body{}, nil, controller.HttpDoc[Game]{})
-	GCore.GetWithRbac(r, this, "healthz9", this.healtzh, "游戏列表9")
+	this.SetDoc(nil, Body{}, nil, nil)
+	GCore.GetWithRbac(r, this, "游戏", "healthz9", this.healtzh, "游戏列表9")
 
 }
 func (this router) Path() string {
@@ -160,7 +180,7 @@ func main() {
 	})
 
 	g.Default().GlobalUse(core.CORSMiddleware()) //选择redis作为缓存服务的存储
-	g.Provide(MyViper).Provide(NewInvoke).MountWithEmpty(NewRouter).Invokes(func(r *Invoke) {
+	g.Provide(MyViper).MountWithEmpty(serve.NewRouter).Provide(NewInvoke).Invokes(func(r *Invoke) {
 		go r.job() //这里不能阻塞 所以最好用 go xxx
 	}).Run()
 }

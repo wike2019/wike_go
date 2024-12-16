@@ -28,7 +28,7 @@ func (this *MapSync[T]) Delete(key string) {
 func (this *MapSync[T]) Keys() []string {
 	this.lock.RLock()
 	defer this.lock.RUnlock()
-	keys := make([]string, 0, len(this.m))
+	keys := make([]string, 0)
 	for k := range this.m {
 		keys = append(keys, k)
 	}
@@ -37,7 +37,7 @@ func (this *MapSync[T]) Keys() []string {
 func (this *MapSync[T]) Values() []T {
 	this.lock.RLock()
 	defer this.lock.RUnlock()
-	values := make([]T, 0, len(this.m))
+	values := make([]T, 0)
 	for k := range this.m {
 		values = append(values, this.m[k])
 	}

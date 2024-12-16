@@ -3,7 +3,7 @@ package cronInit
 import (
 	"fmt"
 	"github.com/robfig/cron"
-	controller "github.com/wike2019/wike_go/pkg/service/http"
+	controller "github.com/wike2019/wike_go/pkg/service/ctl"
 	"time"
 )
 

@@ -6,14 +6,12 @@ import (
 	"time"
 )
 
-const SECRET = "202309011322:00:00:00:00:00:00:00:00"
-
 type InfoData[T any] struct {
 	Core T
 	jwt.RegisteredClaims
 }
 
-func Create[T any](info T, duration time.Duration) (string, error) {
+func Create[T any](info T, duration time.Duration, SECRET string) (string, error) {
 	// Create a new token
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256,
 		InfoData[T]{
@@ -30,7 +28,7 @@ func Create[T any](info T, duration time.Duration) (string, error) {
 	}
 	return tokenString, nil
 }
-func Parse[T any](token string) (*T, error) {
+func Parse[T any](token string, SECRET string) (*T, error) {
 	var res InfoData[T]
 	// Parse the token
 	info, err := jwt.ParseWithClaims(token, &res, func(token *jwt.Token) (interface{}, error) {

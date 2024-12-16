@@ -5,7 +5,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/spf13/viper"
 	"github.com/wike2019/wike_go/pkg/core"
-	controller "github.com/wike2019/wike_go/pkg/service/http"
+	controller "github.com/wike2019/wike_go/pkg/service/ctl"
 	"github.com/wike2019/wike_go/pkg/service/memorylog"
 	"log"
 	"time"

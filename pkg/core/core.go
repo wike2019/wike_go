@@ -3,7 +3,6 @@ package core
 import (
 	"github.com/gin-gonic/gin"
 	"github.com/spf13/viper"
-	casbinInit "github.com/wike2019/wike_go/pkg/service/casbin"
 	"go.uber.org/fx"
 	"go.uber.org/zap"
 )
@@ -17,7 +16,7 @@ type GCore struct {
 	Controller       []interface{}
 	globalMiddleware []gin.HandlerFunc
 	CronFunc         []map[string]func()
-	RoleCtl          *casbinInit.RoleCtl
+	RoleCtl          *RoleCtl
 	StopRun          []func() error
 	Reject           bool
 	zap              *zap.Logger

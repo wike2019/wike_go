@@ -2,7 +2,6 @@ package core
 
 import (
 	"github.com/gin-gonic/gin"
-	casbinInit "github.com/wike2019/wike_go/pkg/service/casbin"
 	cronInit "github.com/wike2019/wike_go/pkg/service/cron"
 	zaplog "github.com/wike2019/wike_go/pkg/service/log"
 	"go.uber.org/fx"
@@ -11,8 +10,8 @@ import (
 )
 
 var Module = fx.Module("infra",
-	fx.Provide(zaplog.GetLogger), //默认日志
-	fx.Provide(cronInit.NewDefaultCron, casbinInit.NewEnforcer, casbinInit.NewCtl), //定时器任务 rbac权限
+	fx.Provide(zaplog.GetLogger),                             //默认日志
+	fx.Provide(cronInit.NewDefaultCron, NewEnforcer, NewCtl), //定时器任务 rbac权限
 	fx.Invoke(func(*http.Server) {}),
 	fx.Provide(InitDb),
 )

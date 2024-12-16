@@ -1,8 +1,10 @@
-package casbinInit
+package core
 
 import (
 	"github.com/casbin/casbin/v2"
+	"github.com/casbin/gorm-adapter/v3"
 	"go.uber.org/zap"
+	"log"
 	"os"
 )
 
@@ -23,17 +25,28 @@ m = g(r.sub, p.sub) && keyMatch(r.obj, p.obj) && (r.act == p.act || p.act == "*"
 `
 
 // 鉴权系统
-func NewEnforcer() *casbin.Enforcer {
+func NewEnforcer(db *CoreDb) *casbin.Enforcer {
 	_, err := os.Stat("model.conf")
 	if os.IsNotExist(err) {
 		os.WriteFile("model.conf", []byte(modelconfig), os.ModePerm)
 	}
-	os.WriteFile("policy.csv", []byte(""), os.ModePerm)
-	e, err := casbin.NewEnforcer("model.conf", "policy.csv")
+	adapter, err := gormadapter.NewAdapterByDB(db.DB)
 	if err != nil {
-		panic("Casbin初始化失败" + err.Error())
+		log.Fatalf("Failed to create NewAdapterByDB: %v", err)
 	}
-	return e
+
+	// 2. 创建 Casbin Enforcer，加载模型和策略
+	enforcer, err := casbin.NewEnforcer("model.conf", adapter)
+	if err != nil {
+		log.Fatalf("Failed to create enforcer: %v", err)
+	}
+
+	// 3. 加载策略（如果已经存在）
+	err = enforcer.LoadPolicy()
+	if err != nil {
+		log.Fatalf("Failed to load policy: %v", err)
+	}
+	return enforcer
 }
 
 // 核心鉴权系统

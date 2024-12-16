@@ -8,7 +8,6 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/google/uuid"
 	"github.com/spf13/viper"
-	casbinInit "github.com/wike2019/wike_go/pkg/service/casbin"
 	cronInit "github.com/wike2019/wike_go/pkg/service/cron"
 	"go.uber.org/fx"
 	"go.uber.org/zap"
@@ -19,8 +18,8 @@ import (
 	"time"
 )
 
-func (this *GCore) NewHTTPServer(ControllerList []Controller, db *CoreDb, lc fx.Lifecycle, zap *zap.Logger, cfg *viper.Viper, DefaultCron *cronInit.DefaultCron, RoleCtl *casbinInit.RoleCtl) *http.Server {
-	this.RoleCtl = RoleCtl
+func (this *GCore) NewHTTPServer(ControllerList []Controller, db *CoreDb, lc fx.Lifecycle, zap *zap.Logger, cfg *viper.Viper, defaultCron *cronInit.DefaultCron, roleCtl *RoleCtl) *http.Server {
+	this.RoleCtl = roleCtl
 	this.zap = zap
 	this.db = db
 	this.cfg = cfg
@@ -62,33 +61,35 @@ func (this *GCore) NewHTTPServer(ControllerList []Controller, db *CoreDb, lc fx.
 			}()
 			for _, item := range this.CronFunc {
 				for k, v := range item {
-					DefaultCron.AddFunc(k, v)
+					defaultCron.AddFunc(k, v)
 				}
 			}
-			DefaultCron.DefaultTask()
+			defaultCron.DefaultTask()
 			go func() {
-				DefaultCron.Start()
+				defaultCron.Start()
 			}()
 
 			tmpl, err := template.New("markdown").Parse(mdTemplate)
 			if err != nil {
-				panic(err)
+				zap.Fatal(err.Error())
 			}
 
 			// 创建 Markdown 文件
 			file, err := os.Create("接口文档.md")
 			if err != nil {
-				panic(err)
+				zap.Fatal(err.Error())
 			}
 
 			// 渲染模板到文件
 			err = tmpl.Execute(file, this.db.GetData())
 			if err != nil {
-				panic(err)
+				zap.Fatal(err.Error())
 			}
 
-			file.Close()
-
+			err = file.Close()
+			if err != nil {
+				zap.Fatal(err.Error())
+			}
 			return nil
 		},
 		OnStop: func(ctx context.Context) error {
@@ -97,7 +98,7 @@ func (this *GCore) NewHTTPServer(ControllerList []Controller, db *CoreDb, lc fx.
 			ctx, cancel := context.WithTimeout(ctx, time.Second*10)
 			defer cancel()
 			this.Reject = true
-			DefaultCron.Stop()
+			defaultCron.Stop()
 			srv.Shutdown(ctx)
 			for _, job := range this.StopRun {
 				err := job()
@@ -121,26 +122,4 @@ func (this *GCore) Default() *GCore {
 	return this //添加body数据长度限制中间件
 	//全局中间件 //注册用户自定义全局中间件
 	//this.gin.Use(rateLimiter.RateLimiter(rateLimiterCache, cfg)) //设置接口根据ip限流
-}
-
-// 权限注册函数
-func (this *GCore) GetWithRbac(r *gin.RouterGroup, group Controller, path string, handler gin.HandlerFunc, name string) {
-	query, body, header, output := group.GetInnerData()
-	this.db.ApiTable(name, group.Name(), Input(query, body, header), Output(output), group.Path()+path, http.MethodGet)
-	r.GET(path, handler)
-}
-func (this *GCore) PostWithRbac(r *gin.RouterGroup, group Controller, path string, handler gin.HandlerFunc, name string) {
-	query, body, header, output := group.GetInnerData()
-	this.db.ApiTable(name, group.Name(), Input(query, body, header), Output(output), group.Path()+path, http.MethodPost)
-	r.POST(path, handler)
-}
-func (this *GCore) DelWithRbac(r *gin.RouterGroup, group Controller, path string, handler gin.HandlerFunc, name string) {
-	query, body, header, output := group.GetInnerData()
-	this.db.ApiTable(name, group.Name(), Input(query, body, header), Output(output), group.Path()+path, http.MethodDelete)
-	r.DELETE(path, handler)
-}
-func (this *GCore) PutWithRbac(r *gin.RouterGroup, group Controller, path string, handler gin.HandlerFunc, name string) {
-	query, body, header, output := group.GetInnerData()
-	this.db.ApiTable(name, group.Name(), Input(query, body, header), Output(output), group.Path()+path, http.MethodPut)
-	r.PUT(path, handler)
 }

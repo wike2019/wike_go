@@ -6,7 +6,7 @@ import (
 	"github.com/gin-contrib/timeout"
 	"github.com/gin-gonic/gin"
 	"github.com/google/uuid"
-	controller "github.com/wike2019/wike_go/pkg/service/http"
+	controller "github.com/wike2019/wike_go/pkg/service/ctl"
 	"github.com/wike2019/wike_go/pkg/service/rateLimiter"
 	"go.uber.org/zap"
 	"golang.org/x/time/rate"

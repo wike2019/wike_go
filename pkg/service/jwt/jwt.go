@@ -11,13 +11,14 @@ type InfoData[T any] struct {
 	jwt.RegisteredClaims
 }
 
-func Create[T any](info T, duration time.Duration, SECRET string) (string, error) {
+func Create[T any](info T, duration time.Duration, SECRET string, Issuer string) (string, error) {
 	// Create a new token
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256,
 		InfoData[T]{
 			Core: info,
 			RegisteredClaims: jwt.RegisteredClaims{
 				ExpiresAt: jwt.NewNumericDate(time.Now().Add(duration)),
+				Issuer:    Issuer,
 			},
 		})
 

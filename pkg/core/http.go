@@ -60,12 +60,13 @@ func (this *GCore) NewHTTPServer(ControllerList []Controller, db *CoreDb, lc fx.
 					zap.Error(fmt.Sprintf("HTTP server listen: %s\n", err))
 				}
 			}()
+			this.DefaultTask()
 			for _, item := range this.CronFunc {
 				for k, v := range item {
 					defaultCron.AddFunc(k, v)
 				}
 			}
-			defaultCron.DefaultTask()
+
 			go func() {
 				defaultCron.Start()
 			}()

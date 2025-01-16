@@ -113,7 +113,7 @@ func DeleteItem[T any](db *gorm.DB, obj T) error {
 	return db.Delete(obj).Error
 }
 
-func ListItem[T any](db *gorm.DB, Offset, Count int, obj T, call DBChange) ([]T, int64, error) {
+func ListItem[T any](db *gorm.DB, Offset, Count int, obj interface{}, call DBChange) ([]T, int64, error) {
 	var list []T
 	count := int64(0)
 	db = db.Model(obj)
@@ -121,13 +121,14 @@ func ListItem[T any](db *gorm.DB, Offset, Count int, obj T, call DBChange) ([]T,
 	if err != nil {
 		return list, 0, err
 	}
+	if call != nil {
+		db = call(db)
+	}
 	err = db.Count(&count).Error
 	if err != nil {
 		return list, 0, err
 	}
-	if call != nil {
-		db = call(db)
-	}
+
 	err = db.Limit(Count).Offset(Offset).Debug().Find(&list).Error
 	if err != nil {
 		return list, 0, err
@@ -141,7 +142,7 @@ func GetItemByID[T any](db *gorm.DB, obj T, id int, call DBChange) error {
 	return db.Where("id=?", id).First(obj).Error
 }
 
-func GetItem[T any](db *gorm.DB, obj T, call DBChange) error {
+func GetItem[T any](db *gorm.DB, obj interface{}, call DBChange) error {
 	db = db.Model(obj)
 	db, err := GetGormColumnMap(obj, db)
 	if err != nil {
@@ -158,7 +159,7 @@ func GetItem[T any](db *gorm.DB, obj T, call DBChange) error {
 	return nil
 }
 
-func ListItemAll[T any](db *gorm.DB, obj T, call DBChange) ([]T, error) {
+func ListItemAll[T any](db *gorm.DB, obj interface{}, call DBChange) ([]T, error) {
 	var list []T
 	db = db.Model(obj)
 	db, err := GetGormColumnMap(obj, db)

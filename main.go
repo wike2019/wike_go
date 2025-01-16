@@ -9,6 +9,7 @@ import (
 	"github.com/wike2019/wike_go/pkg/service/memorylog"
 	"github.com/wike2019/wike_go/serve"
 	"log"
+	"net/http"
 	"time"
 )
 
@@ -181,6 +182,19 @@ func main() {
 
 	g.Default().GlobalUse(core.CORSMiddleware()) //选择redis作为缓存服务的存储
 	g.Provide(MyViper).MountWithEmpty(serve.NewRouter).Provide(NewInvoke).Invokes(func(r *Invoke) {
+		g.RoleCtl.AddRole("wike", "gust")
+		g.RoleCtl.AddRole("admin", "wike")
+		g.RoleCtl.AddRole("admin", "gust")
+		g.RoleCtl.AddRole("wike", "nologin")
+		g.RoleCtl.AddRule("wike", "/api/test", http.MethodGet)
+		g.RoleCtl.AddRule("gust", "/api/gust", http.MethodGet)
+		g.RoleCtl.AddRule("wike", "/api/gust", http.MethodGet)
+		fmt.Println(g.RoleCtl.GetAllParentRoles("admin"))
+		fmt.Println(g.RoleCtl.GetRulesForRole("wike"))
+		fmt.Println(g.RoleCtl.GetRulesForRole("gust"))
+		fmt.Println(g.RoleCtl.GetRulesForInheritRole("admin"))
+		fmt.Println(g.RoleCtl.DeleteRulesForRole("wike"))
+		//fmt.Println(g.RoleCtl.DeleteRoleInheritance("wike", "gust"))
 		go r.job() //这里不能阻塞 所以最好用 go xxx
 	}).Run()
 }

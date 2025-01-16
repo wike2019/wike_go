@@ -3,18 +3,29 @@ package model
 import "gorm.io/gorm"
 
 type API struct {
-	ID     uint   `gorm:"primaryKey"`             // 主键
-	Group  string `gorm:"size:300" search:"like"` // 路由分组
-	Name   string `gorm:"size:300" search:"like"` // 路由名称
-	Input  string `gorm:"size:2000"`              // 入参数
-	Output string `gorm:"size:2000"`              // 出参数
-	Path   string `gorm:"size:300" search:"like"` // 路由路径
-	Method string `gorm:"size:100" search:"true"` // 请求方法
-	Status int    `gorm:"type:int" search:"true"`
+	gorm.Model        // 主键
+	Group      string `gorm:"size:300" search:"like"` // 路由分组
+	Name       string `gorm:"size:300" search:"like"` // 路由名称
+	Input      string `gorm:"size:2000"`              // 入参数
+	Output     string `gorm:"size:2000"`              // 出参数
+	Path       string `gorm:"size:300" search:"like"` // 路由路径
+	Method     string `gorm:"size:100" search:"true"` // 请求方法
+	Status     int    `gorm:"type:int" search:"true"`
 }
 
 func (this *API) TableName() string {
 	return "apis"
+}
+
+type Job struct {
+	gorm.Model        // 主键
+	Name       string `gorm:"size:300" search:"like"` // 路由名称
+	Cron       string `gorm:"size:2000"`
+	Func       string `gorm:"size:2000"` // 入参数
+}
+
+func (this *Job) TableName() string {
+	return "jobs"
 }
 
 type SysDictionary struct {

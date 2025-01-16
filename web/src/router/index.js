@@ -4,7 +4,7 @@ import { createRouter, createWebHashHistory } from 'vue-router';
 const routes = [
     {
         path: '/',
-        component: () => import('../pages/home/VIndex.vue') // 默认首页
+        component: () => import('../pages/home/index.vue') // 默认首页
     },
     {
         path: '/:catchAll(.*)', // 捕获所有未匹配的路由

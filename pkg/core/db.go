@@ -14,15 +14,16 @@ type CoreDb struct {
 }
 
 func InitDb() *CoreDb {
-	dbsqlite, err := gorm.Open(sqlite.Open("core.db"), &gorm.Config{})
+	dbsqlite, err := gorm.Open(sqlite.Open("./db/core.db"), &gorm.Config{})
 	if err != nil {
 		panic("failed to connect database")
 	}
-	err = dbsqlite.AutoMigrate(&model.API{}, &model.SysDictionary{}, &model.SysDictionaryDetail{})
+	err = dbsqlite.AutoMigrate(&model.API{}, &model.SysDictionary{}, &model.SysDictionaryDetail{}, &model.Job{})
 	if err != nil {
 		panic("failed to migrate database")
 	}
 	dbsqlite.Model(model.API{}).Where("1=1").Update("status", 2)
+	dbsqlite.Model(model.Job{}).Where("1=1").Delete(&model.Job{})
 	return &CoreDb{
 		DB: dbsqlite,
 	}

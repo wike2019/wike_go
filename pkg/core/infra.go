@@ -2,11 +2,13 @@ package core
 
 import (
 	"github.com/gin-gonic/gin"
+	"github.com/wike2019/wike_go/model"
 	cronInit "github.com/wike2019/wike_go/pkg/service/cron"
 	zaplog "github.com/wike2019/wike_go/pkg/service/log"
 	"go.uber.org/fx"
 	"net/http"
 	"reflect"
+	"runtime"
 )
 
 var Module = fx.Module("infra",
@@ -76,8 +78,14 @@ func (this *GCore) Supply(supply ...interface{}) *GCore {
 }
 
 // 用于添加定时任务
-func (this *GCore) Cron(spec string, cmd func()) *GCore {
+func (this *GCore) Cron(spec string, cmd func(), Job string) *GCore {
 	this.CronFunc = append(this.CronFunc, map[string]func(){spec: cmd})
+	JobTask := &model.Job{
+		Name: Job,
+		Cron: spec,
+		Func: runtime.FuncForPC(reflect.ValueOf(cmd).Pointer()).Name(),
+	}
+	this.db.DB.Create(JobTask)
 	return this
 }
 func (this *GCore) Stop(job func() error) *GCore {

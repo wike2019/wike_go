@@ -1,7 +1,7 @@
 package ctl
 
 type PageDocList[T any] struct {
-	List T `json:"list"`
+	List []T `json:"list"`
 	Page Page
 }
 type HttpReturn struct {

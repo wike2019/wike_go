@@ -19,7 +19,7 @@ func InitDb() *CoreDb {
 	if err != nil {
 		panic("failed to connect database")
 	}
-	err = dbsqlite.AutoMigrate(&model.API{}, &model.SysDictionary{}, &model.SysDictionaryDetail{})
+	err = dbsqlite.AutoMigrate(&model.API{}, &model.SysDictionary{}, &model.SysDictionaryDetail{}, &model.Job{})
 	if err != nil {
 		panic("failed to migrate database")
 	}
@@ -66,37 +66,6 @@ func (this *CoreDb) ApiTable(name string, group string, input string, output str
 	}
 
 	return this
-}
-
-type SysDictionary struct {
-	Name   string `json:"name" form:"name" gorm:"column:name;comment:字典名（中）"`  // 字典名（中）
-	Type   string `json:"type" form:"type" gorm:"column:type;comment:分类;unique"` // 分类，添加唯一索引
-	Status int    `json:"status" form:"status" gorm:"column:status;comment:状态"`  // 状态
-	Desc   string `json:"desc" form:"desc" gorm:"column:desc;comment:描述"`        // 描述
-	gorm.Model
-	APIDATA              []API                 `json:"API" form:"API"`
-	SysDictionaryDetails []SysDictionaryDetail `json:"sysDictionaryDetails" form:"sysDictionaryDetails"`
-}
-
-type API struct {
-	ID              uint   `json:"id" form:"id" gorm:"column:id;comment:API ID"`
-	Group           string `json:"group" form:"group" gorm:"column:group;comment:API组"`
-	Name            string `json:"name" form:"name" gorm:"column:name;comment:API名称"`
-	Input           string `json:"input" form:"input" gorm:"column:input;comment:API输入"`
-	Output          string `json:"output" form:"output" gorm:"column:output;comment:API输出"`
-	Path            string `json:"path" form:"path" gorm:"column:path;comment:API路径"`
-	Method          string `json:"method" form:"method" gorm:"column:method;comment:API方法"`
-	Status          int    `json:"status" form:"status" gorm:"column:status;comment:API状态"`
-	SysDictionaryID int    `json:"sysDictionaryID" form:"sysDictionaryID" gorm:"column:sys_dictionary_id;comment:字典ID"`
-}
-
-type SysDictionaryDetail struct {
-	Label           string `json:"label" form:"label" gorm:"column:label;comment:标签"`
-	Value           string `json:"value" form:"value" gorm:"column:value;comment:值"`
-	Extend          string `json:"extend" form:"extend" gorm:"column:extend;comment:扩展"`
-	Status          int    `json:"status" form:"status" gorm:"column:status;comment:状态"`
-	Sort            int    `json:"sort" form:"sort" gorm:"column:sort;comment:排序"`
-	SysDictionaryID int    `json:"sysDictionaryID" form:"sysDictionaryID" gorm:"column:sys_dictionary_id;comment:字典ID"`
 }
 
 // 生成表格的函数

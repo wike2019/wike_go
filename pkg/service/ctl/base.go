@@ -1,7 +1,6 @@
 package ctl
 
 import (
-	"encoding/json"
 	"errors"
 	"github.com/gin-gonic/gin"
 	"io"
@@ -37,6 +36,28 @@ func (r *Controller) GetInnerData() (interface{}, interface{}, interface{}, inte
 	defer r.clear()
 	return r.query, r.body, r.header, r.output
 }
+func (r *Controller) PageInit() {
+	queryStr := r.Context.Query("page")
+	countStr := r.Context.Query("count")
+	// 转换为 int
+	if queryStr != "" {
+		page, err := strconv.Atoi(queryStr)
+		Error(err, 400)
+		r.CurPage = page
+	}
+	if countStr != "" {
+		count, err := strconv.Atoi(countStr)
+		Error(err, 400)
+		r.Count = count
+	}
+	if r.CurPage == 0 {
+		r.CurPage = 1
+	}
+	if r.Count == 0 {
+		r.Count = 10
+	}
+	r.Offset = (r.CurPage - 1) * r.Count
+}
 func (r *Controller) SetContext(ctx *gin.Context) *Controller {
 	clone := new(Controller)
 	body, err := io.ReadAll(ctx.Request.Body)
@@ -45,33 +66,7 @@ func (r *Controller) SetContext(ctx *gin.Context) *Controller {
 		return nil
 	}
 	clone.Data = body
-	err = json.Unmarshal(clone.Data, clone)
-
-	if err != nil {
-		Error(errors.New("参数错误"+err.Error()), 400)
-		return nil
-	}
-	queryStr := ctx.Query("page")
-	countStr := ctx.Query("count")
-	// 转换为 int
-	if queryStr != "" {
-		page, err := strconv.Atoi(queryStr)
-		Error(err, 400)
-		clone.CurPage = page
-	}
-	if countStr != "" {
-		count, err := strconv.Atoi(countStr)
-		Error(err, 400)
-		clone.Count = count
-	}
 	clone.Context = ctx
-	if clone.CurPage == 0 {
-		clone.CurPage = 1
-	}
-	if clone.Count == 0 {
-		clone.Count = 10
-	}
-	clone.Offset = (clone.CurPage - 1) * clone.Count
 	return clone
 }
 func (r *Controller) Success(msg string, data interface{}) {

@@ -19,8 +19,9 @@ func (this CoreCtl) Path() string {
 	return "/core"
 }
 func (this *CoreCtl) Build(r *gin.RouterGroup, GCore *core.GCore) {
+	t := r.Use()
 	this.SetDoc(ctl.Page{}, model.API{}, nil, ctl.PageDoc[model.API]())
-	GCore.PostWithRbac(r, this, "系统内部接口", "/api", this.getApi, "获取接口列表")
+	GCore.PostWithRbac(t, this, "系统内部接口", "/api", this.getApi, "获取接口列表")
 	GCore.GetWithRbac(r, this, "系统内部接口", "/menu", this.getMenu, "获取菜单列表")
 	this.SetDoc(nil, nil, nil, ctl.HttpDocList[model.SysDictionary]{})
 	GCore.GetWithRbac(r, this, "系统内部接口", "/dictionaryList", this.dictionaryList, "获取字典列表")

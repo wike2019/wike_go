@@ -52,9 +52,9 @@ func (this CoreCtl) dictionaryItem(context *gin.Context) {
 	c := this.SetContext(context)
 	err := json.Unmarshal(c.Data, Item)
 	ctl.Error(err, 400)
-	err = ctl.GetItem[*model.SysDictionary](this.DB.DB, Item, func(db *gorm.DB) *gorm.DB {
+	res, err := ctl.GetItem[*model.SysDictionary](this.DB.DB, Item, func(db *gorm.DB) *gorm.DB {
 		return db.Preload("SysDictionaryDetails", "status = ?", 2)
 	})
 	ctl.Error(err, 400)
-	c.Success("获取字典列表成功", Item)
+	c.Success("获取字典列表成功", res)
 }

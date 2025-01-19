@@ -149,7 +149,7 @@ func GetItem[T any](db *gorm.DB, obj interface{}, call DBChange) (T, error) {
 	db = db.Model(obj)
 	db, err := GetGormColumnMap(obj, db)
 	if err != nil {
-		return nil, err
+		return res, err
 	}
 	if call != nil {
 		db = call(db)
@@ -157,7 +157,7 @@ func GetItem[T any](db *gorm.DB, obj interface{}, call DBChange) (T, error) {
 	err = db.Debug().First(&res).Error
 
 	if err != nil {
-		return nil, err
+		return res, err
 	}
 	return res, nil
 }

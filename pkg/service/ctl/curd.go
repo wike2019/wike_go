@@ -135,28 +135,31 @@ func ListItem[T any](db *gorm.DB, Offset, Count int, obj interface{}, call DBCha
 	}
 	return list, count, nil
 }
-func GetItemByID[T any](db *gorm.DB, obj T, id int, call DBChange) error {
+func GetItemByID[T any](db *gorm.DB, obj T, id int, call DBChange) (T, error) {
+	var res T
 	if call != nil {
 		db = call(db)
 	}
-	return db.Where("id=?", id).First(obj).Error
+	err := db.Where("id=?", id).First(&res).Error
+	return res, err
 }
 
-func GetItem[T any](db *gorm.DB, obj interface{}, call DBChange) error {
+func GetItem[T any](db *gorm.DB, obj interface{}, call DBChange) (T, error) {
+	var res T
 	db = db.Model(obj)
 	db, err := GetGormColumnMap(obj, db)
 	if err != nil {
-		return err
+		return nil, err
 	}
 	if call != nil {
 		db = call(db)
 	}
-	err = db.Debug().First(&obj).Error
+	err = db.Debug().First(&res).Error
 
 	if err != nil {
-		return err
+		return nil, err
 	}
-	return nil
+	return res, nil
 }
 
 func ListItemAll[T any](db *gorm.DB, obj interface{}, call DBChange) ([]T, error) {

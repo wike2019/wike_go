@@ -42,3 +42,6 @@ func (this *AntsCtl) Submit(task func() error) error {
 func (this *AntsCtl) Error() error {
 	return this.err
 }
+func (this *AntsCtl) Wait() {
+	this.WaitGroup.Wait()
+}

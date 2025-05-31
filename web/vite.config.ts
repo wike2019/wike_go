@@ -10,6 +10,7 @@ export default defineConfig({
       '@': fileURLToPath(new URL('./src', import.meta.url)), // 配置 @ 为 src 目录
     },
   },
+  base: 'static',
   server: {
     host: '0.0.0.0',
     port: 5173,

@@ -7,6 +7,38 @@ const routes = [
         component: () => import('../pages/home/index.vue') // 默认首页
     },
     {
+        path: '/api',
+        component: () => import('../pages/api/index.vue') // 默认首页
+    },
+    {
+        path: '/dict',
+        component: () => import('../pages/dict/index.vue') // 默认首页
+    },
+    {
+        path: '/dictDetail',
+        component: () => import('../pages/dictDetail/index.vue') // 默认首页
+    },
+    {
+        path: '/role',
+        component: () => import('../pages/role/index.vue') // 默认首页
+    },
+    {
+        path: '/rule',
+        component: () => import('../pages/rule/index.vue') // 默认首页
+    },
+    {
+        path: '/cronJob',
+        component: () => import('../pages/cronJob/index.vue') // 默认首页
+    },
+    {
+        path: '/log',
+        component: () => import('../pages/log/index.vue') // 默认首页
+    },
+    {
+        path: '/settings',
+        component: () => import('../pages/settings/index.vue') // 默认首页
+    },
+    {
         path: '/:catchAll(.*)', // 捕获所有未匹配的路由
         redirect:"/"
     },
@@ -42,6 +74,5 @@ export function addDynamicRoutes(routeData) {
         router.addRoute(route); // 动态添加到路由
     });
 }
-
 
 export default router;

@@ -19,7 +19,7 @@ type GCore struct {
 	RoleCtl          *RoleCtl
 	StopRun          []func() error
 	Reject           bool
-	zap              *zap.Logger
+	Zap              *zap.Logger
 	cfg              *viper.Viper
 	db               *CoreDb
 }
@@ -36,7 +36,7 @@ func God() *GCore {
 		globalMiddleware: make([]gin.HandlerFunc, 0),
 		CronFunc:         make([]map[string]func(), 0),
 		StopRun:          make([]func() error, 0),
-		zap:              nil,
+		Zap:              nil,
 		cfg:              nil,
 	}
 }

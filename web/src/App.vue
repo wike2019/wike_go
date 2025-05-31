@@ -1,42 +1,32 @@
 <script setup lang="ts">
-import {reactive, ref} from "vue";
-import MenuItem from './components/MenuItem.vue'; // 子组件
-const menus=reactive({
+import { useRouter } from 'vue-router'
 
-})
-let activeMenu=ref("")
-async function fetchMenus() {
-  try {
-    const savedRoutes = localStorage.getItem('dynamicRoutes');; // 替换为后端接口
-    Object.assign(menus, JSON.parse(savedRoutes)); // 将后端返回的数据赋值给菜单
-    activeMenu.value=menus[0]
-  } catch (error) {
-    console.error('获取菜单失败：', error);
-  }
-}
-fetchMenus()
+const router = useRouter()
 </script>
 
 <template>
-  <div>
-    <el-menu :default-active="activeMenu" class="menu" mode="vertical">
-      <menu-item v-for="menu in menus" :key="menu.path" :menu="menu" />
-    </el-menu>
+  <div class="page">
+    <aside class="nav">
+        <h1>WIKE管理系统</h1>
+        <nav>
+          <p @click="router.push('/api')">接口管理</p>
+          <p @click="router.push('/dict')">字典管理</p>
+          <p @click="router.push('/role')">角色管理</p>
+          <p @click="router.push('/log')">日志管理</p>
+          <p @click="router.push('/cronJob')">定时任务管理</p>
+          <p @click="router.push('/settings')">系统配置</p>
+        </nav>
+    </aside>
+    <main>
+      <router-view></router-view>
+    </main>
   </div>
-  <div><router-view></router-view></div>
 </template>
 
 <style scoped>
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.vue:hover {
-  filter: drop-shadow(0 0 2em #42b883aa);
-}
+.page{display: flex;flex: 1}
+.page .nav{width:200px;padding:10px;background:#000;color: #fff;height:100%;min-height:800px;margin-right:10px}
+.page h1{font-size:20px;text-align: center}
+ nav{margin-top:20px;width:200px}
+.nav p{line-height:2;padding-left:10px;font-size:14px;border-bottom:1px solid #ccc;cursor: pointer;;margin:10px 0}
 </style>

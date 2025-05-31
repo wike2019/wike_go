@@ -8,7 +8,8 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/google/uuid"
 	"github.com/spf13/viper"
-	cronInit "github.com/wike2019/wike_go/pkg/service/cron"
+	cronInit "github.com/wike2019/wike_go/pkg/func/cron"
+	"github.com/wike2019/wike_go/pkg/tpl"
 	"go.uber.org/fx"
 	"go.uber.org/zap"
 	"net"
@@ -21,7 +22,7 @@ import (
 func (this *GCore) NewHTTPServer(ControllerList []Controller, db *CoreDb, lc fx.Lifecycle, zap *zap.Logger, cfg *viper.Viper, defaultCron *cronInit.DefaultCron, roleCtl *RoleCtl) *http.Server {
 
 	this.RoleCtl = roleCtl
-	this.zap = zap
+	this.Zap = zap
 	this.db = db
 	this.cfg = cfg
 	r := gin.New()
@@ -71,7 +72,7 @@ func (this *GCore) NewHTTPServer(ControllerList []Controller, db *CoreDb, lc fx.
 				defaultCron.Start()
 			}()
 
-			tmpl, err := template.New("markdown").Parse(mdTemplate)
+			tmpl, err := template.New("markdown").Parse(tpl.MdTemplate)
 			if err != nil {
 				zap.Fatal(err.Error())
 			}
@@ -119,7 +120,7 @@ func (this *GCore) Default() *GCore {
 	this.GlobalUse(Reject(this))                          //优雅关闭
 	this.GlobalUse(AddTrace())
 	this.GlobalUse(CustomRecover(this)) //添加recover中间件和traceId中间件
-	this.GlobalUse(AccessLog(this))     //添加c和 跨域中间件
+	this.GlobalUse(AccessLog(this))     //添加访问日志中间件
 	this.GlobalUse(LimitBodySize(32 << 20))
 	return this //添加body数据长度限制中间件
 	//全局中间件 //注册用户自定义全局中间件

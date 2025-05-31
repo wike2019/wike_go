@@ -6,8 +6,9 @@ import (
 	"github.com/gin-contrib/timeout"
 	"github.com/gin-gonic/gin"
 	"github.com/google/uuid"
-	controller "github.com/wike2019/wike_go/pkg/service/ctl"
-	"github.com/wike2019/wike_go/pkg/service/rateLimiter"
+	controller "github.com/wike2019/wike_go/pkg/func/ctl"
+	"github.com/wike2019/wike_go/pkg/func/rateLimiter"
+	"github.com/wike2019/wike_go/pkg/utils"
 	"go.uber.org/zap"
 	"golang.org/x/time/rate"
 	"io"
@@ -70,19 +71,22 @@ func AccessLog(god *GCore) gin.HandlerFunc {
 		if raw != "" {
 			path = path + "?" + raw
 		}
-		god.zap.Info("接口访问日志",
-			zap.String("path", path),
-			zap.String("method", method),
-			zap.String("http_host", ctx.Request.Host),
-			zap.String("ua", ctx.Request.UserAgent()),
-			zap.String("remote_addr", ctx.Request.RemoteAddr),
-			zap.Int("request_body_size", len(reqBody)),
-			zap.Int("status_code", statusCode),
-			zap.Int("error_code", ctx.GetInt("error_code")),
-			zap.String("error_msg", ctx.GetString("error_code")),
-			zap.String("client_ip", clientIP),
-			zap.Duration("latency", latency),
-		)
+		if ctx.Query("log") != "false" {
+			god.Zap.Info("接口访问日志",
+				zap.String("path", path),
+				zap.String("method", method),
+				zap.String("http_host", ctx.Request.Host),
+				zap.String("ua", ctx.Request.UserAgent()),
+				zap.String("remote_addr", ctx.Request.RemoteAddr),
+				zap.Int("request_body_size", len(reqBody)),
+				zap.Int("status_code", statusCode),
+				zap.Int("error_code", ctx.GetInt("error_code")),
+				zap.String("error_msg", ctx.GetString("error_code")),
+				zap.String("client_ip", clientIP),
+				zap.Duration("latency", latency),
+			)
+		}
+
 	}
 }
 
@@ -110,11 +114,11 @@ func CustomRecover(god *GCore) gin.HandlerFunc {
 			if err := recover(); err != nil {
 				check, ok := err.(controller.StatusError)
 				if ok {
-					god.zap.Warn("主动抛出的错误", zap.String("path", c.Request.URL.Path), zap.String("error", check.Msg), zap.Int("code", check.Code))
+					god.Zap.Warn("主动抛出的错误", zap.String("path", c.Request.URL.Path), zap.String("error", check.Msg), zap.Int("code", check.Code))
 					c.AbortWithStatusJSON(check.Code, gin.H{"message": check.Msg, "code": check.Code, "trace_id": c.GetString("trace_id")})
 					return
 				}
-				god.zap.Error("接口错误", zap.String("path", c.Request.URL.Path), zap.String("error", err.(error).Error()))
+				god.Zap.Error("接口错误", zap.String("path", c.Request.URL.Path), zap.String("error", err.(error).Error()))
 				c.AbortWithStatusJSON(500, gin.H{"message": "Internal Server Error", "code": 500, "trace_id": c.GetString("trace_id")})
 				return
 			}
@@ -175,10 +179,15 @@ func Authorizer(e *casbin.Enforcer) gin.HandlerFunc {
 		}
 	}
 }
+func Root() gin.HandlerFunc {
+	return func(c *gin.Context) {
+		c.Set("role", "root")
+	}
+}
 
 func RateLimiter(rateLimiterCache rateLimiter.GetLimit, r float64, b int) gin.HandlerFunc {
 	return func(c *gin.Context) {
-		limiter := rateLimiterCache.GetLimiter(c.ClientIP(), rate.Limit(r), b)
+		limiter := rateLimiterCache.GetLimiter(utils.GetClientIP(c), rate.Limit(r), b)
 		if limiter.Allow() == false {
 			c.AbortWithStatusJSON(http.StatusTooManyRequests, gin.H{
 				"code":     http.StatusTooManyRequests,

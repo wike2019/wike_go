@@ -2,9 +2,9 @@ package core
 
 import (
 	"github.com/gin-gonic/gin"
-	"github.com/wike2019/wike_go/model"
-	cronInit "github.com/wike2019/wike_go/pkg/service/cron"
-	zaplog "github.com/wike2019/wike_go/pkg/service/log"
+	cronInit "github.com/wike2019/wike_go/pkg/func/cron"
+	zaplog "github.com/wike2019/wike_go/pkg/func/log"
+	"github.com/wike2019/wike_go/server/model"
 	"go.uber.org/fx"
 	"net/http"
 	"reflect"
@@ -81,7 +81,9 @@ func (this *GCore) Supply(supply ...interface{}) *GCore {
 func (this *GCore) Cron(spec string, cmd func(), Job string) *GCore {
 	this.CronFunc = append(this.CronFunc, map[string]func(){spec: cmd})
 	JobTask := &model.Job{
-		Name: Job,
+		JobSearch: model.JobSearch{
+			Name: Job,
+		},
 		Cron: spec,
 		Func: runtime.FuncForPC(reflect.ValueOf(cmd).Pointer()).Name(),
 	}

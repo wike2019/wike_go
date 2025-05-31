@@ -4,19 +4,11 @@ import App from './App.vue'
 import ElementPlus from 'element-plus';
 import 'element-plus/dist/index.css'
 import router from './router'
-import { addDynamicRoutes } from './router';
-import axios from 'axios';
+import 'github-markdown-css/github-markdown.css';
+
+
+
 const  app=createApp(App).use(ElementPlus).use(router)
 
-// 模拟从后端获取动态路由
-async function fetchRoutes() {
-    const response = await axios.get('/core/menu'); // 替换为后端接口
-    addDynamicRoutes(response.data)
-    localStorage.setItem('dynamicRoutes', JSON.stringify(response.data)); // 保存到 localStorage
 
-}
-
-// 在页面加载时获取动态路由
-fetchRoutes().then(() => {
-    app.mount('#app');
-});
+app.mount('#app');

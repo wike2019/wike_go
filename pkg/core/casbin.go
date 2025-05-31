@@ -3,23 +3,16 @@ package core
 import (
 	"github.com/casbin/casbin/v2"
 	"github.com/casbin/gorm-adapter/v3"
+	"github.com/wike2019/wike_go/server/model"
 	"go.uber.org/zap"
 	"log"
 	"os"
 )
 
-type Rule struct {
-	Role   string `json:"role"`
-	Path   string `json:"path"`
-	Method string `json:"method"`
-}
-
-type AggregatedRule struct {
-	Path   string   `json:"path"`
-	Method string   `json:"method"`
-	Roles  []string `json:"roles"`
-}
-
+/*
+*
+配置文件模版
+*/
 const modelconfig = `
 [request_definition]
 r = sub, obj, act
@@ -33,10 +26,13 @@ g = _, _
 [policy_effect]
 e = some(where (p.eft == allow)) && !some(where (p.eft == deny))
 [matchers]
-m = g(r.sub, p.sub) && keyMatch(r.obj, p.obj) && (r.act == p.act || p.act == "*")
+m = r.sub == "root" ||(g(r.sub, p.sub) && keyMatch(r.obj, p.obj) && (r.act == p.act || p.act == "*"))
 `
 
-// 鉴权系统
+/*
+*
+鉴权系统初始化方法，默认使用sqlite作为数据存储
+*/
 func NewEnforcer(db *CoreDb) *casbin.Enforcer {
 	_, err := os.Stat("model.conf")
 	if os.IsNotExist(err) {
@@ -117,31 +113,31 @@ func (this *RoleCtl) GetAllParentRoles(role string) []string {
 	return result
 }
 
-func (this *RoleCtl) GetRulesForRole(role string) []Rule {
+func (this *RoleCtl) GetRulesForRole(role string) []model.Rule {
 	// 使用 GetFilteredPolicy 按照第一个字段（角色/主体）筛选规则
-	res := make([]Rule, 0)
+	res := make([]model.Rule, 0)
 	rules, _ := this.E.GetFilteredPolicy(0, role)
 	for _, item := range rules {
-		res = append(res, Rule{
-			Role:   item[0],
-			Path:   item[1],
-			Method: item[2],
+		res = append(res, model.Rule{
+			RuleSearch: model.RuleSearch{Role: item[0]},
+			Path:       item[1],
+			Method:     item[2],
 		})
 	}
 	return res
 }
 
-func (this *RoleCtl) GetRulesForInheritRole(role string) []AggregatedRule {
+func (this *RoleCtl) GetRulesForInheritRole(role string) []model.AggregatedRule {
 	list := this.GetAllParentRoles(role)
-	res := make([]Rule, 0)
+	res := make([]model.Rule, 0)
 	for _, item := range list {
 		res = append(res, this.GetRulesForRole(item)...)
 	}
 	return this.AggregateRules(res)
 }
-func (this *RoleCtl) AggregateRules(rules []Rule) []AggregatedRule {
+func (this *RoleCtl) AggregateRules(rules []model.Rule) []model.AggregatedRule {
 	// 使用 map 去重，key 是 path + method，value 是角色数组
-	aggregatedMap := make(map[string]AggregatedRule)
+	aggregatedMap := make(map[string]model.AggregatedRule)
 
 	for _, rule := range rules {
 		// 组合 Path 和 Method 作为 key
@@ -163,7 +159,7 @@ func (this *RoleCtl) AggregateRules(rules []Rule) []AggregatedRule {
 			aggregatedMap[key] = aggregatedRule
 		} else {
 			// 如果不存在，新建 AggregatedRule
-			aggregatedMap[key] = AggregatedRule{
+			aggregatedMap[key] = model.AggregatedRule{
 				Path:   rule.Path,
 				Method: rule.Method,
 				Roles:  []string{rule.Role},
@@ -172,7 +168,7 @@ func (this *RoleCtl) AggregateRules(rules []Rule) []AggregatedRule {
 	}
 
 	// 将 map 转换为 slice
-	result := make([]AggregatedRule, 0, len(aggregatedMap))
+	result := make([]model.AggregatedRule, 0, len(aggregatedMap))
 	for _, aggregatedRule := range aggregatedMap {
 		result = append(result, aggregatedRule)
 	}

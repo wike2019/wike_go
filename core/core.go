@@ -49,6 +49,7 @@ func (this *GCore) Run() {
 
 	//通过依赖注入调用启动函数
 	this.app = fx.New(
+		Module,
 		fx.NopLogger,
 		fx.Provide(fx.Annotate(
 			this.NewHTTPServer,

@@ -155,15 +155,15 @@
       "type": "file"
     },
     {
-      "path": "db/core.go",
-      "accessCount": 2,
-      "lastAccessed": 1777719746713,
+      "path": "go.mod",
+      "accessCount": 3,
+      "lastAccessed": 1777720359947,
       "type": "file"
     },
     {
-      "path": "go.mod",
-      "accessCount": 1,
-      "lastAccessed": 1777719404970,
+      "path": "db/core.go",
+      "accessCount": 2,
+      "lastAccessed": 1777719746713,
       "type": "file"
     },
     {

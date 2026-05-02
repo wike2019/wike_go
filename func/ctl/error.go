@@ -15,12 +15,6 @@ func Error(err error, code int) {
 		panic(StatusError{Msg: err.Error(), Code: code})
 	}
 }
-func (r *Controller) IsExist(err error) bool {
-	if errors.Is(err, gorm.ErrRecordNotFound) {
-		return false
-	}
-	return true
-}
 func IsExist(err error) bool {
 	if errors.Is(err, gorm.ErrRecordNotFound) {
 		return false

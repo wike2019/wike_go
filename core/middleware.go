@@ -11,11 +11,11 @@ import (
 	"github.com/gin-contrib/timeout"
 	"github.com/gin-gonic/gin"
 	"github.com/google/uuid"
-	"github.com/wike2019/wike_go/v2/lib/controller"
-	"github.com/wike2019/wike_go/v2/lib/rate"
-	"github.com/wike2019/wike_go/v2/pkg/func/rateLimiter"
-	"github.com/wike2019/wike_go/v2/pkg/utils"
+	"github.com/wike2019/wike_go/v2/func/ctl"
+	"github.com/wike2019/wike_go/v2/func/rateLimiter"
+	"github.com/wike2019/wike_go/v2/utils"
 	"go.uber.org/zap"
+	"golang.org/x/time/rate"
 )
 
 // 优雅关闭中间件
@@ -113,7 +113,7 @@ func CustomRecover(god *GCore) gin.HandlerFunc {
 	return func(c *gin.Context) {
 		defer func() {
 			if err := recover(); err != nil {
-				check, ok := err.(controller.StatusError)
+				check, ok := err.(ctl.StatusError)
 				if ok {
 					god.Zap.Warn("主动抛出的错误", zap.String("path", c.Request.URL.Path), zap.String("error", check.Msg), zap.Int("code", check.Code))
 					c.AbortWithStatusJSON(check.Code, gin.H{"message": check.Msg, "code": check.Code, "trace_id": c.GetString("trace_id")})
@@ -149,9 +149,6 @@ func LimitBodySize(maxSize int64) gin.HandlerFunc {
 func TimeoutMiddleware(duration time.Duration) gin.HandlerFunc {
 	return timeout.New(
 		timeout.WithTimeout(duration),
-		timeout.WithHandler(func(c *gin.Context) {
-			c.Next()
-		}),
 		timeout.WithResponse(TimeOutResponse),
 	)
 }

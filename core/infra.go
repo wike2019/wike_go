@@ -10,7 +10,7 @@ import (
 	"github.com/wike2019/wike_go/v2/cronJob"
 	"github.com/wike2019/wike_go/v2/db"
 	"github.com/wike2019/wike_go/v2/fxTags"
-	"github.com/wike2019/wike_go/v2/server/model"
+	"github.com/wike2019/wike_go/v2/model"
 	"go.uber.org/fx"
 )
 
@@ -64,13 +64,13 @@ func (this *GCore) GlobalUse(middleware ...gin.HandlerFunc) *GCore {
 
 // 用于挂载带参数控制器
 func (this *GCore) Mount(class interface{}, params []string) *GCore {
-	this.Controller = append(this.Controller, fxTags.CreateInterFace(class, new(Controller), CreateGroup("routes"), params))
+	this.Controller = append(this.Controller, fxTags.CreateInterFace(class, new(Controller), fxTags.CreateGroup("routes"), params))
 	return this
 }
 
 // 用于挂载不带参数控制器
 func (this *GCore) MountWithEmpty(class interface{}) *GCore {
-	this.Controller = append(this.Controller, fxTags.CreateInterFace(class, new(Controller), CreateGroup("routes"), []string{}))
+	this.Controller = append(this.Controller, fxTags.CreateInterFace(class, new(Controller), fxTags.CreateGroup("routes"), []string{}))
 	return this
 }
 
@@ -92,7 +92,7 @@ func (this *GCore) Cron(spec string, cmd func(), Job string, enabled bool) *GCor
 	this.CronFunc = append(this.CronFunc, map[string]model.CronJob{spec: {Enabled: enabled, Name: Job, Fn: cmd}})
 	JobTask := &model.CronJob{
 		Name:    Job,
-		enabled: enabled,
+		Enabled: enabled,
 		Cron:    spec,
 		Func:    runtime.FuncForPC(reflect.ValueOf(cmd).Pointer()).Name(),
 	}

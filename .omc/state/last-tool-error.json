@@ -1,0 +1,7 @@
+{
+  "tool_name": "Bash",
+  "tool_input_preview": "{\"command\":\"go build ./... 2>&1\",\"timeout\":120000,\"description\":\"Build after removing duplicate method\"}",
+  "error": "Exit code 1\n# github.com/wike2019/wike_go/v2/core\ncore/infra.go:67:91: undefined: CreateGroup\ncore/infra.go:73:91: undefined: CreateGroup\ncore/infra.go:95:3: unknown field enabled in struct literal of type \"github.com/wike2019/wike_go/v2/model\".CronJob, but does have Enabled\ncore/infra.go:96:3: unknown field Cron in struct literal of type \"github.com/wike2019/wike_go/v2/model\".CronJob\ncore/infra.go:97:3: unknown field Func in struct literal of type \"github.com/wike2019/wike_go/v2/model\".CronJob\n...",
+  "timestamp": "2026-05-02T11:04:36.115Z",
+  "retry_count": 4
+}

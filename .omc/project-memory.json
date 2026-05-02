@@ -1,0 +1,201 @@
+{
+  "version": "1.0.0",
+  "lastScanned": 1777719310897,
+  "projectRoot": "/Users/h31/Desktop/学习笔记/wike_go",
+  "techStack": {
+    "languages": [
+      {
+        "name": "Go",
+        "version": null,
+        "confidence": "high",
+        "markers": [
+          "go.mod"
+        ]
+      }
+    ],
+    "frameworks": [],
+    "packageManager": "go",
+    "runtime": null
+  },
+  "build": {
+    "buildCommand": null,
+    "testCommand": null,
+    "lintCommand": null,
+    "devCommand": null,
+    "scripts": {}
+  },
+  "conventions": {
+    "namingStyle": null,
+    "importStyle": null,
+    "testPattern": null,
+    "fileOrganization": null
+  },
+  "structure": {
+    "isMonorepo": false,
+    "workspaces": [],
+    "mainDirectories": [],
+    "gitBranches": {
+      "defaultBranch": "main",
+      "branchingStrategy": null
+    }
+  },
+  "customNotes": [],
+  "directoryMap": {
+    "constData": {
+      "path": "constData",
+      "purpose": null,
+      "fileCount": 1,
+      "lastAccessed": 1777719310866,
+      "keyFiles": [
+        "router.go"
+      ]
+    },
+    "core": {
+      "path": "core",
+      "purpose": null,
+      "fileCount": 5,
+      "lastAccessed": 1777719310867,
+      "keyFiles": [
+        "core.go",
+        "http.go",
+        "infra.go",
+        "logger.go",
+        "middleware.go"
+      ]
+    },
+    "cronJob": {
+      "path": "cronJob",
+      "purpose": null,
+      "fileCount": 1,
+      "lastAccessed": 1777719310868,
+      "keyFiles": [
+        "cronJob.go"
+      ]
+    },
+    "db": {
+      "path": "db",
+      "purpose": null,
+      "fileCount": 1,
+      "lastAccessed": 1777719310869,
+      "keyFiles": [
+        "core.go"
+      ]
+    },
+    "func": {
+      "path": "func",
+      "purpose": null,
+      "fileCount": 0,
+      "lastAccessed": 1777719310870,
+      "keyFiles": []
+    },
+    "fxTags": {
+      "path": "fxTags",
+      "purpose": null,
+      "fileCount": 1,
+      "lastAccessed": 1777719310870,
+      "keyFiles": [
+        "tags.go"
+      ]
+    },
+    "model": {
+      "path": "model",
+      "purpose": null,
+      "fileCount": 1,
+      "lastAccessed": 1777719310871,
+      "keyFiles": [
+        "cronJob.go"
+      ]
+    },
+    "utils": {
+      "path": "utils",
+      "purpose": "Utility functions",
+      "fileCount": 11,
+      "lastAccessed": 1777719310871,
+      "keyFiles": [
+        "copy.go",
+        "duration.go",
+        "ip.go",
+        "lock.go",
+        "map.go"
+      ]
+    },
+    "func/config": {
+      "path": "func/config",
+      "purpose": "Configuration files",
+      "fileCount": 1,
+      "lastAccessed": 1777719310882,
+      "keyFiles": [
+        "config.go"
+      ]
+    }
+  },
+  "hotPaths": [
+    {
+      "path": "core/infra.go",
+      "accessCount": 5,
+      "lastAccessed": 1777719948113,
+      "type": "file"
+    },
+    {
+      "path": "core/middleware.go",
+      "accessCount": 4,
+      "lastAccessed": 1777719964089,
+      "type": "file"
+    },
+    {
+      "path": "func/ctl/error.go",
+      "accessCount": 3,
+      "lastAccessed": 1777719866405,
+      "type": "file"
+    },
+    {
+      "path": "model/cronJob.go",
+      "accessCount": 3,
+      "lastAccessed": 1777719960386,
+      "type": "file"
+    },
+    {
+      "path": "db/core.go",
+      "accessCount": 2,
+      "lastAccessed": 1777719746713,
+      "type": "file"
+    },
+    {
+      "path": "go.mod",
+      "accessCount": 1,
+      "lastAccessed": 1777719404970,
+      "type": "file"
+    },
+    {
+      "path": "func/rateLimiter/rateLimiter.go",
+      "accessCount": 1,
+      "lastAccessed": 1777719538476,
+      "type": "file"
+    },
+    {
+      "path": "utils/lock.go",
+      "accessCount": 1,
+      "lastAccessed": 1777719538580,
+      "type": "file"
+    },
+    {
+      "path": "utils/ip.go",
+      "accessCount": 1,
+      "lastAccessed": 1777719552116,
+      "type": "file"
+    },
+    {
+      "path": "func/ctl/base.go",
+      "accessCount": 1,
+      "lastAccessed": 1777719850797,
+      "type": "file"
+    },
+    {
+      "path": "core",
+      "accessCount": 1,
+      "lastAccessed": 1777719886094,
+      "type": "directory"
+    }
+  ],
+  "userDirectives": []
+}

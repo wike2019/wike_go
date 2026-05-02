@@ -1,4 +1,4 @@
-module github.com/wike2019/wike_go
+module github.com/wike2019/wike_go/v2
 
 go 1.25.0
 

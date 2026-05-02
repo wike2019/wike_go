@@ -11,10 +11,10 @@ import (
 	"github.com/gin-contrib/timeout"
 	"github.com/gin-gonic/gin"
 	"github.com/google/uuid"
-	"github.com/wike2019/wike_go/lib/controller"
-	"github.com/wike2019/wike_go/lib/rate"
-	"github.com/wike2019/wike_go/pkg/func/rateLimiter"
-	"github.com/wike2019/wike_go/pkg/utils"
+	"github.com/wike2019/wike_go/v2/lib/controller"
+	"github.com/wike2019/wike_go/v2/lib/rate"
+	"github.com/wike2019/wike_go/v2/pkg/func/rateLimiter"
+	"github.com/wike2019/wike_go/v2/pkg/utils"
 	"go.uber.org/zap"
 )
 

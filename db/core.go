@@ -2,7 +2,7 @@ package db
 
 import (
 	"github.com/glebarez/sqlite"
-	"github.com/wike2019/wike_go/server/model"
+	"github.com/wike2019/wike_go/v2/server/model"
 	"gorm.io/gorm"
 )
 

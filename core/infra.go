@@ -7,10 +7,10 @@ import (
 	"runtime"
 
 	"github.com/gin-gonic/gin"
-	"github.com/wike2019/wike_go/cronJob"
-	"github.com/wike2019/wike_go/db"
-	"github.com/wike2019/wike_go/fxTags"
-	"github.com/wike2019/wike_go/server/model"
+	"github.com/wike2019/wike_go/v2/cronJob"
+	"github.com/wike2019/wike_go/v2/db"
+	"github.com/wike2019/wike_go/v2/fxTags"
+	"github.com/wike2019/wike_go/v2/server/model"
 	"go.uber.org/fx"
 )
 

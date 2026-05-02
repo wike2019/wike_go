@@ -3,10 +3,10 @@ package core
 import (
 	"github.com/gin-gonic/gin"
 	"github.com/spf13/viper"
-	constdata "github.com/wike2019/wike_go/constData"
-	"github.com/wike2019/wike_go/db"
-	"github.com/wike2019/wike_go/fxTags"
-	"github.com/wike2019/wike_go/model"
+	constdata "github.com/wike2019/wike_go/v2/constData"
+	"github.com/wike2019/wike_go/v2/db"
+	"github.com/wike2019/wike_go/v2/fxTags"
+	"github.com/wike2019/wike_go/v2/model"
 	"go.uber.org/fx"
 	"go.uber.org/zap"
 )

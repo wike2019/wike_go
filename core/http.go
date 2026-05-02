@@ -10,8 +10,8 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/google/uuid"
 	"github.com/spf13/viper"
-	"github.com/wike2019/wike_go/cronJob"
-	"github.com/wike2019/wike_go/db"
+	"github.com/wike2019/wike_go/v2/cronJob"
+	"github.com/wike2019/wike_go/v2/db"
 	"go.uber.org/fx"
 	"go.uber.org/zap"
 )

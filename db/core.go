@@ -1,6 +1,8 @@
 package db
 
 import (
+	"os"
+
 	"github.com/glebarez/sqlite"
 	"github.com/wike2019/wike_go/v2/model"
 	"gorm.io/gorm"
@@ -11,6 +13,7 @@ type CoreDb struct {
 }
 
 func InitDb() *CoreDb {
+	os.MkdirAll("./db", os.ModePerm)
 	dbSqlite, err := gorm.Open(sqlite.Open("./db/core.db"), &gorm.Config{})
 	if err != nil {
 		panic("failed to connect database")

@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"net/http"
 	"reflect"
-	"runtime"
 
 	"github.com/gin-gonic/gin"
 	constdata "github.com/wike2019/wike_go/v2/constData"
@@ -91,13 +90,7 @@ func (this *GCore) Cron(spec string, cmd func(), Job string, enabled bool) *GCor
 		}
 	}
 	this.CronFunc = append(this.CronFunc, map[string]model.CronJob{spec: {Enabled: enabled, Name: Job, Fn: cmd}})
-	JobTask := &model.CronJob{
-		Name:    Job,
-		Enabled: enabled,
-		Cron:    spec,
-		Func:    runtime.FuncForPC(reflect.ValueOf(cmd).Pointer()).Name(),
-	}
-	this.db.DB.Create(JobTask)
+
 	return this
 }
 func (this *GCore) Stop(job func() error) *GCore {

@@ -5,6 +5,8 @@ import (
 	"fmt"
 	"net"
 	"net/http"
+	"reflect"
+	"runtime"
 	"time"
 
 	"github.com/gin-gonic/gin"
@@ -12,6 +14,7 @@ import (
 	"github.com/spf13/viper"
 	"github.com/wike2019/wike_go/v2/cronJob"
 	"github.com/wike2019/wike_go/v2/db"
+	"github.com/wike2019/wike_go/v2/model"
 	"go.uber.org/fx"
 	"go.uber.org/zap"
 )
@@ -69,7 +72,15 @@ func (this *GCore) NewHTTPServer(ControllerList []Controller, db *db.CoreDb, lc 
 							job.Fn()
 						}
 					})
+					JobTask := &model.CronJob{
+						Name:    job.Name,
+						Enabled: job.Enabled,
+						Cron:    k,
+						Func:    runtime.FuncForPC(reflect.ValueOf(job.Fn).Pointer()).Name(),
+					}
+					this.db.DB.Create(JobTask)
 				}
+
 			}
 
 			go func() {

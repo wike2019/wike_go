@@ -64,19 +64,21 @@ func (this *GCore) NewHTTPServer(ControllerList []Controller, db *db.CoreDb, lc 
 					zap.Error(fmt.Sprintf("HTTP server listen: %s\n", err))
 				}
 			}()
-			for _, item := range this.CronFunc {
+			for idx, item := range this.CronFunc {
 				for k, v := range item {
-					job := v
+					cronIdx := idx
+					cronKey := k
+					fn := v.Fn
 					defaultCron.AddFunc(k, func() {
-						if job.Enabled {
-							job.Fn()
+						if this.CronFunc[cronIdx][cronKey].Enabled {
+							fn()
 						}
 					})
 					JobTask := &model.CronJob{
-						Name:    job.Name,
-						Enabled: job.Enabled,
+						Name:    v.Name,
+						Enabled: v.Enabled,
 						Cron:    k,
-						Func:    runtime.FuncForPC(reflect.ValueOf(job.Fn).Pointer()).Name(),
+						Func:    runtime.FuncForPC(reflect.ValueOf(v.Fn).Pointer()).Name(),
 					}
 					this.db.DB.Create(JobTask)
 				}

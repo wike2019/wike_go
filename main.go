@@ -1,7 +1,9 @@
 package main
 
 import (
+	"fmt"
 	"log"
+	"time"
 
 	"github.com/gin-gonic/gin"
 	"github.com/spf13/viper"
@@ -46,5 +48,16 @@ func (this router) Path() string {
 func main() {
 	//一个最简单的例子
 	g := core.God()
-	g.Provide(Config).MountWithEmpty(NewRouter).Run()
+	g.Provide(Config).MountWithEmpty(NewRouter).Cron("* * * * * *", func() {
+		fmt.Println(time.Now())
+	}, "定时任务一", true).Invokes(func(GCore *core.GCore) {
+		go func() {
+			time.Sleep(5 * time.Second)
+			GCore.StopTask("定时任务一")
+			fmt.Println("已经停止30秒后再开启")
+			time.Sleep(30 * time.Second)
+			GCore.RestartTask("定时任务一")
+		}()
+
+	}).Run()
 }

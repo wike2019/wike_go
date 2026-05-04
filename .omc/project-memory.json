@@ -132,8 +132,8 @@
   "hotPaths": [
     {
       "path": "core/infra.go",
-      "accessCount": 6,
-      "lastAccessed": 1777724474689,
+      "accessCount": 11,
+      "lastAccessed": 1777874597408,
       "type": "file"
     },
     {
@@ -143,21 +143,27 @@
       "type": "file"
     },
     {
+      "path": "model/cronJob.go",
+      "accessCount": 5,
+      "lastAccessed": 1777874578978,
+      "type": "file"
+    },
+    {
       "path": "go.mod",
       "accessCount": 4,
       "lastAccessed": 1777724454579,
       "type": "file"
     },
     {
-      "path": "model/cronJob.go",
-      "accessCount": 4,
-      "lastAccessed": 1777724480082,
-      "type": "file"
-    },
-    {
       "path": "func/ctl/error.go",
       "accessCount": 4,
       "lastAccessed": 1777724503535,
+      "type": "file"
+    },
+    {
+      "path": "core/http.go",
+      "accessCount": 4,
+      "lastAccessed": 1777874523541,
       "type": "file"
     },
     {
@@ -197,22 +203,22 @@
       "type": "file"
     },
     {
-      "path": "core",
-      "accessCount": 1,
-      "lastAccessed": 1777719886094,
-      "type": "directory"
-    },
-    {
-      "path": "core/http.go",
-      "accessCount": 1,
-      "lastAccessed": 1777724474442,
+      "path": "cronJob/cronJob.go",
+      "accessCount": 2,
+      "lastAccessed": 1777874492110,
       "type": "file"
     },
     {
       "path": "core/core.go",
-      "accessCount": 1,
-      "lastAccessed": 1777724474496,
+      "accessCount": 2,
+      "lastAccessed": 1777874578821,
       "type": "file"
+    },
+    {
+      "path": "core",
+      "accessCount": 1,
+      "lastAccessed": 1777719886094,
+      "type": "directory"
     },
     {
       "path": "core/logger.go",
@@ -284,12 +290,6 @@
       "path": "constData/router.go",
       "accessCount": 1,
       "lastAccessed": 1777724497781,
-      "type": "file"
-    },
-    {
-      "path": "cronJob/cronJob.go",
-      "accessCount": 1,
-      "lastAccessed": 1777724497912,
       "type": "file"
     },
     {
@@ -405,6 +405,12 @@
       "accessCount": 1,
       "lastAccessed": 1777724527936,
       "type": "file"
+    },
+    {
+      "path": "",
+      "accessCount": 1,
+      "lastAccessed": 1777874485296,
+      "type": "directory"
     }
   ],
   "userDirectives": []

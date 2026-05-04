@@ -1,0 +1,7 @@
+{
+  "tool_name": "Bash",
+  "tool_input_preview": "{\"command\":\"go vet ./core/ 2>&1\",\"description\":\"Check for Go build/vet errors in core package\"}",
+  "error": "Exit code 1\n# github.com/wike2019/wike_go/v2/core\nvet: core/infra.go:105:5: cannot assign to struct field this.CronFunc[index][k].Enabled in map",
+  "timestamp": "2026-05-04T05:59:38.894Z",
+  "retry_count": 1
+}

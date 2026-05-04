@@ -97,3 +97,29 @@ func (this *GCore) Stop(job func() error) *GCore {
 	this.StopRun = append(this.StopRun, job)
 	return this
 }
+
+func (this *GCore) StopTask(name string) *GCore {
+	for index, _ := range this.CronFunc {
+		for k, job := range this.CronFunc[index] {
+			if job.Name == name {
+				job.Enabled = false
+				this.CronFunc[index][k] = job
+			}
+		}
+	}
+	this.db.DB.Model(&model.CronJob{}).Where("name = ?", name).Update("enabled", false)
+	return this
+}
+
+func (this *GCore) RestartTask(name string) *GCore {
+	for index, _ := range this.CronFunc {
+		for k, job := range this.CronFunc[index] {
+			if job.Name == name {
+				job.Enabled = true
+				this.CronFunc[index][k] = job
+			}
+		}
+	}
+	this.db.DB.Model(&model.CronJob{}).Where("name = ?", name).Update("enabled", true)
+	return this
+}

@@ -70,7 +70,10 @@ func (this *GCore) NewHTTPServer(ControllerList []Controller, db *db.CoreDb, lc 
 					cronKey := k
 					fn := v.Fn
 					defaultCron.AddFunc(k, func() {
-						if this.CronFunc[cronIdx][cronKey].Enabled {
+						this.cronMu.RLock()
+						enabled := this.CronFunc[cronIdx][cronKey].Enabled
+						this.cronMu.RUnlock()
+						if enabled {
 							fn()
 						}
 					})

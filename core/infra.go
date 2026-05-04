@@ -99,6 +99,7 @@ func (this *GCore) Stop(job func() error) *GCore {
 }
 
 func (this *GCore) StopTask(name string) *GCore {
+	this.cronMu.Lock()
 	for index, _ := range this.CronFunc {
 		for k, job := range this.CronFunc[index] {
 			if job.Name == name {
@@ -107,11 +108,13 @@ func (this *GCore) StopTask(name string) *GCore {
 			}
 		}
 	}
+	this.cronMu.Unlock()
 	this.db.DB.Model(&model.CronJob{}).Where("name = ?", name).Update("enabled", false)
 	return this
 }
 
 func (this *GCore) RestartTask(name string) *GCore {
+	this.cronMu.Lock()
 	for index, _ := range this.CronFunc {
 		for k, job := range this.CronFunc[index] {
 			if job.Name == name {
@@ -120,6 +123,7 @@ func (this *GCore) RestartTask(name string) *GCore {
 			}
 		}
 	}
+	this.cronMu.Unlock()
 	this.db.DB.Model(&model.CronJob{}).Where("name = ?", name).Update("enabled", true)
 	return this
 }

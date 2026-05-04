@@ -1,6 +1,8 @@
 package core
 
 import (
+	"sync"
+
 	"github.com/gin-gonic/gin"
 	"github.com/spf13/viper"
 	constdata "github.com/wike2019/wike_go/v2/constData"
@@ -25,6 +27,7 @@ type GCore struct {
 	Controller       []interface{}
 	globalMiddleware []gin.HandlerFunc
 	CronFunc         []map[string]model.CronJob
+	cronMu           sync.RWMutex
 	StopRun          []func() error
 	Reject           bool
 	cfg              *viper.Viper

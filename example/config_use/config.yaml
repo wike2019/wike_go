@@ -1,0 +1,5 @@
+port: 8888
+development: true
+mysql: "root:root@tcp(192.168.3.2:3310)/test?charset=utf8mb4&parseTime=True&loc=Local"
+redis: "192.168.3.2:6379"
+logPath: "./logs/app.log"

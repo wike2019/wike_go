@@ -1,6 +1,6 @@
 {
   "version": "1.0.0",
-  "lastScanned": 1777719310897,
+  "lastScanned": 1777886164279,
   "projectRoot": "/Users/h31/Desktop/学习笔记/wike_go",
   "techStack": {
     "languages": [
@@ -45,7 +45,7 @@
       "path": "constData",
       "purpose": null,
       "fileCount": 1,
-      "lastAccessed": 1777719310866,
+      "lastAccessed": 1777886164258,
       "keyFiles": [
         "router.go"
       ]
@@ -54,7 +54,7 @@
       "path": "core",
       "purpose": null,
       "fileCount": 5,
-      "lastAccessed": 1777719310867,
+      "lastAccessed": 1777886164258,
       "keyFiles": [
         "core.go",
         "http.go",
@@ -67,7 +67,7 @@
       "path": "cronJob",
       "purpose": null,
       "fileCount": 1,
-      "lastAccessed": 1777719310868,
+      "lastAccessed": 1777886164259,
       "keyFiles": [
         "cronJob.go"
       ]
@@ -75,9 +75,10 @@
     "db": {
       "path": "db",
       "purpose": null,
-      "fileCount": 1,
-      "lastAccessed": 1777719310869,
+      "fileCount": 2,
+      "lastAccessed": 1777886164259,
       "keyFiles": [
+        "core.db",
         "core.go"
       ]
     },
@@ -85,14 +86,14 @@
       "path": "func",
       "purpose": null,
       "fileCount": 0,
-      "lastAccessed": 1777719310870,
+      "lastAccessed": 1777886164259,
       "keyFiles": []
     },
     "fxTags": {
       "path": "fxTags",
       "purpose": null,
       "fileCount": 1,
-      "lastAccessed": 1777719310870,
+      "lastAccessed": 1777886164260,
       "keyFiles": [
         "tags.go"
       ]
@@ -101,7 +102,7 @@
       "path": "model",
       "purpose": null,
       "fileCount": 1,
-      "lastAccessed": 1777719310871,
+      "lastAccessed": 1777886164260,
       "keyFiles": [
         "cronJob.go"
       ]
@@ -110,7 +111,7 @@
       "path": "utils",
       "purpose": "Utility functions",
       "fileCount": 11,
-      "lastAccessed": 1777719310871,
+      "lastAccessed": 1777886164261,
       "keyFiles": [
         "copy.go",
         "duration.go",
@@ -123,7 +124,7 @@
       "path": "func/config",
       "purpose": "Configuration files",
       "fileCount": 1,
-      "lastAccessed": 1777719310882,
+      "lastAccessed": 1777886164262,
       "keyFiles": [
         "config.go"
       ]
@@ -131,286 +132,40 @@
   },
   "hotPaths": [
     {
-      "path": "core/infra.go",
-      "accessCount": 13,
-      "lastAccessed": 1777874980979,
-      "type": "file"
-    },
-    {
-      "path": "core/http.go",
-      "accessCount": 6,
-      "lastAccessed": 1777874996494,
-      "type": "file"
-    },
-    {
-      "path": "core/middleware.go",
-      "accessCount": 5,
-      "lastAccessed": 1777724474625,
-      "type": "file"
-    },
-    {
-      "path": "model/cronJob.go",
-      "accessCount": 5,
-      "lastAccessed": 1777874578978,
-      "type": "file"
-    },
-    {
-      "path": "core/core.go",
-      "accessCount": 5,
-      "lastAccessed": 1777874964475,
-      "type": "file"
-    },
-    {
-      "path": "go.mod",
-      "accessCount": 4,
-      "lastAccessed": 1777724454579,
-      "type": "file"
-    },
-    {
-      "path": "func/ctl/error.go",
-      "accessCount": 4,
-      "lastAccessed": 1777724503535,
-      "type": "file"
-    },
-    {
-      "path": "db/core.go",
-      "accessCount": 3,
-      "lastAccessed": 1777724497848,
-      "type": "file"
-    },
-    {
-      "path": "utils/ip.go",
-      "accessCount": 2,
-      "lastAccessed": 1777724491870,
-      "type": "file"
-    },
-    {
-      "path": "utils/lock.go",
-      "accessCount": 2,
-      "lastAccessed": 1777724491970,
-      "type": "file"
-    },
-    {
-      "path": "func/ctl/base.go",
-      "accessCount": 2,
-      "lastAccessed": 1777724503431,
-      "type": "file"
-    },
-    {
-      "path": "func/rateLimiter/rateLimiter.go",
-      "accessCount": 2,
-      "lastAccessed": 1777724515782,
-      "type": "file"
-    },
-    {
-      "path": "main.go",
-      "accessCount": 2,
-      "lastAccessed": 1777724527877,
-      "type": "file"
-    },
-    {
-      "path": "cronJob/cronJob.go",
-      "accessCount": 2,
-      "lastAccessed": 1777874492110,
-      "type": "file"
-    },
-    {
-      "path": "core",
-      "accessCount": 1,
-      "lastAccessed": 1777719886094,
-      "type": "directory"
-    },
-    {
-      "path": "core/logger.go",
-      "accessCount": 1,
-      "lastAccessed": 1777724474573,
-      "type": "file"
-    },
-    {
-      "path": "model/common/time.go",
-      "accessCount": 1,
-      "lastAccessed": 1777724480026,
-      "type": "file"
-    },
-    {
-      "path": "model/common/type.go",
-      "accessCount": 1,
-      "lastAccessed": 1777724480138,
-      "type": "file"
-    },
-    {
-      "path": "utils/random.go",
-      "accessCount": 1,
-      "lastAccessed": 1777724486163,
-      "type": "file"
-    },
-    {
-      "path": "utils/number.go",
-      "accessCount": 1,
-      "lastAccessed": 1777724486243,
-      "type": "file"
-    },
-    {
-      "path": "utils/duration.go",
-      "accessCount": 1,
-      "lastAccessed": 1777724486304,
-      "type": "file"
-    },
-    {
-      "path": "utils/copy.go",
-      "accessCount": 1,
-      "lastAccessed": 1777724486358,
-      "type": "file"
-    },
-    {
-      "path": "utils/queue.go",
-      "accessCount": 1,
-      "lastAccessed": 1777724486418,
-      "type": "file"
-    },
-    {
-      "path": "utils/map.go",
-      "accessCount": 1,
-      "lastAccessed": 1777724491917,
-      "type": "file"
-    },
-    {
-      "path": "utils/md5.go",
-      "accessCount": 1,
-      "lastAccessed": 1777724492073,
-      "type": "file"
-    },
-    {
-      "path": "utils/set.go",
-      "accessCount": 1,
-      "lastAccessed": 1777724492125,
-      "type": "file"
-    },
-    {
-      "path": "constData/router.go",
-      "accessCount": 1,
-      "lastAccessed": 1777724497781,
-      "type": "file"
-    },
-    {
-      "path": "utils/password.go",
-      "accessCount": 1,
-      "lastAccessed": 1777724497970,
-      "type": "file"
-    },
-    {
-      "path": "fxTags/tags.go",
-      "accessCount": 1,
-      "lastAccessed": 1777724498027,
-      "type": "file"
-    },
-    {
-      "path": "func/ctl/curd.go",
-      "accessCount": 1,
-      "lastAccessed": 1777724503486,
-      "type": "file"
-    },
-    {
-      "path": "func/config/config.go",
-      "accessCount": 1,
-      "lastAccessed": 1777724503587,
-      "type": "file"
-    },
-    {
-      "path": "func/ctl/const.go",
-      "accessCount": 1,
-      "lastAccessed": 1777724503720,
-      "type": "file"
-    },
-    {
-      "path": "func/ctl/page.go",
-      "accessCount": 1,
-      "lastAccessed": 1777724509716,
-      "type": "file"
-    },
-    {
-      "path": "func/cache/redis/cache.go",
-      "accessCount": 1,
-      "lastAccessed": 1777724509776,
-      "type": "file"
-    },
-    {
-      "path": "func/cache/interface.go",
-      "accessCount": 1,
-      "lastAccessed": 1777724509858,
-      "type": "file"
-    },
-    {
-      "path": "func/jwt/jwt.go",
-      "accessCount": 1,
-      "lastAccessed": 1777724509911,
-      "type": "file"
-    },
-    {
-      "path": "func/cache/memory/cache.go",
-      "accessCount": 1,
-      "lastAccessed": 1777724509969,
-      "type": "file"
-    },
-    {
-      "path": "func/retry/retry.go",
-      "accessCount": 1,
-      "lastAccessed": 1777724515653,
-      "type": "file"
-    },
-    {
-      "path": "func/breaker/breaker.go",
-      "accessCount": 1,
-      "lastAccessed": 1777724515729,
-      "type": "file"
-    },
-    {
-      "path": "func/bloomfilter/bloomfilter.go",
-      "accessCount": 1,
-      "lastAccessed": 1777724515832,
-      "type": "file"
-    },
-    {
       "path": "func/hash/consistent.go",
       "accessCount": 1,
-      "lastAccessed": 1777724515886,
-      "type": "file"
-    },
-    {
-      "path": "func/ants_service/ants.go",
-      "accessCount": 1,
-      "lastAccessed": 1777724521402,
+      "lastAccessed": 1777886180221,
       "type": "file"
     },
     {
       "path": "func/os/serverMetrics.go",
       "accessCount": 1,
-      "lastAccessed": 1777724521487,
+      "lastAccessed": 1777886439428,
       "type": "file"
     },
     {
-      "path": "func/jwt/jwt_test.go",
+      "path": "utils/queue.go",
       "accessCount": 1,
-      "lastAccessed": 1777724527716,
+      "lastAccessed": 1777886699300,
       "type": "file"
     },
     {
-      "path": "func/cache/memory/cache_test.go",
+      "path": "utils/lock.go",
       "accessCount": 1,
-      "lastAccessed": 1777724527819,
+      "lastAccessed": 1777886806994,
       "type": "file"
     },
     {
-      "path": "func/cache/redis/cache_test.go",
+      "path": "utils/md5.go",
       "accessCount": 1,
-      "lastAccessed": 1777724527936,
+      "lastAccessed": 1777886897691,
       "type": "file"
     },
     {
-      "path": "",
+      "path": "utils/copy.go",
       "accessCount": 1,
-      "lastAccessed": 1777874485296,
-      "type": "directory"
+      "lastAccessed": 1777886982893,
+      "type": "file"
     }
   ],
   "userDirectives": []

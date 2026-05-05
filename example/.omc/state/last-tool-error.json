@@ -1,0 +1,7 @@
+{
+  "tool_name": "Bash",
+  "tool_input_preview": "{\"command\":\"cd \\\"/Users/h31/Desktop/自己的项目/后台管理系统/backend\\\" && go mod tidy 2>&1\",\"timeout\":120000,\"description\":\"Run go mod tidy with corrected imports\"}",
+  "error": "Exit code 1\ngo: finding module for package github.com/wike2019/wike_go/cronJob\ngo: finding module for package github.com/wike2019/wike_go/db\ngo: finding module for package github.com/wike2019/wike_go/lib/rate\ngo: finding module for package github.com/wike2019/wike_go/constData\ngo: finding module for package github.com/wike2019/wike_go/model\ngo: finding module for package github.com/wike2019/wike_go/fxTags\ngo: finding module for package github.com/wike2019/wike_go/pkg/func/rateLimiter\ngo: finding...",
+  "timestamp": "2026-05-02T10:45:11.870Z",
+  "retry_count": 1
+}
